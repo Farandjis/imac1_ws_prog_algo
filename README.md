@@ -53,7 +53,7 @@ lesquels il ne faut pas tomber
 <i>Image originale et version modifiée</i>
 </div>
 
-Lorem ipsum
+On met le rouge et le bleu à 0, il ne reste plus que le vert.
 
 <br><br><br>
 
@@ -65,6 +65,8 @@ Lorem ipsum
 <i>Image originale et version modifiée</i>
 </div>
 
+On remplace le rouge par le bleu et le bleu par le rouge.
+
 <br><br><br>
 
 ### <a id="p3"></a> 3. Noir & Blanc
@@ -75,8 +77,8 @@ Lorem ipsum
 <i>Image originale et version modifiée</i>
 </div>
 
-Lorem ipsum
-
+On calcule la luminance à l'aide de la formule suivante : `luminance = 0.3 * rouge + 0.59 * vert + 0.11 * bleu;`\
+On donne comme valeur à chaque couleur, la valeur de la luminance.
 <br><br><br>
 
 ### <a id="p4"></a> 4. Négatif
@@ -87,7 +89,7 @@ Lorem ipsum
 <i>Image originale et version modifiée</i>
 </div>
 
-Lorem ipsum
+On inverse les couleurs : `couleur = 1 - [la teinte de la couleur]`
 
 <br><br><br>
 
@@ -98,8 +100,11 @@ Lorem ipsum
 <i>Version générée</i>
 </div>
 
-Lorem ipsum
-
+Ici l'image a été entièrement générée.\
+Le pixel tout à gauche est noir, celui tout à droite est blanc.\
+On divise la teinte blanche (1) par la longueur de l'image (300 ici), on obtient une valeur.\
+Cela donne un calcul du type : `nuance_gris = valeur * x`, où quand x = 0, c'est noir, et quand x = longueur (donc 300), c'est blanc.\
+On donne la même nuance de gris à toute la colonne, et on change automatiquement à chaque déplacement sur l'axe x puisque nous suivons la boucle imbriquée.
 <br><br><br>
 
 ### <a id="p6"></a> 6. Miroir
@@ -110,7 +115,7 @@ Lorem ipsum
 <i>Image originale et version modifiée</i>
 </div>
 
-Lorem ipsum
+# Lorem ipsum
 
 <br><br><br>
 
@@ -122,7 +127,10 @@ Lorem ipsum
 <i>Image originale et version modifiée</i>
 </div>
 
-Lorem ipsum
+Lorsque nous parcourons l'image, nous avons 25% de chance que le pixel soit modifié (bruité).\
+Lorsqu'il est décidé que ce pixel est bruité, on récupère une valeur aléatoire que nous donnons aux teintes rouges, vertes et bleues.\
+\
+Nous utilisons un seed afin qu'à chaque lancement du programme, nous obtenons la même suite aléatoire et donc le même résultat que sur l'image juste au dessus (version modifiée).
 
 <br><br><br>
 
@@ -134,7 +142,7 @@ Lorem ipsum
 <i>Image originale et version modifiée</i>
 </div>
 
-Lorem ipsum
+# Lorem ipsum
 
 <br><br><br>
 
@@ -146,7 +154,11 @@ Lorem ipsum
 <i>Image originale et version modifiée</i>
 </div>
 
-Lorem ipsum
+Pour illustrer : nous sommes sur un logiciel graphique comme Paint.NET.\
+Chaque couleur est un calque. On décide de décaler le calque bleu à 30 pixels sur la gauche, le calque rouge à 30 pixels sur la droite.\
+En faisant cela, nous obtenons la version modifiée affiché dans ce rapport.\
+\
+Il suffit juste de créé une nouvelle image (noir) et de placer de manière décalé, comme il est décrit, le pixel que nous avons récupéré sur l'image d'origine.
 
 <br><br><br>
 
@@ -158,7 +170,7 @@ Lorem ipsum
 <i>Image originale et version modifiée</i>
 </div>
 
-Lorem ipsum
+# Lorem ipsum à voir avec le professeur si c'est légal
 
 <br><br>
 
@@ -194,7 +206,7 @@ Lorem ipsum
 <i>Image originale et version modifiée</i>
 </div>
 
-Lorem ipsum
+# Lorem ipsum à voir avec le professeur si c'est légal
 
 <br><br><br>
 
@@ -206,6 +218,6 @@ Lorem ipsum
 <i>Image originale et version modifiée</i>
 </div>
 
-Lorem ipsum
+# Lorem ipsum à voir avec le professeur si c'est légal
 
 <br><br><br>
