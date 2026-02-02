@@ -318,19 +318,21 @@ void cercle(sil::Image &image)
 }
 
 
-    void exo11(sil::Image &image)
-    {
-        float blanc[3] = {1, 1, 1};
-        disque(image, blanc, 100);
-    }
+void exo11(sil::Image &image)
+{
+    // DISQUE
+    float blanc[3] = {1, 1, 1};
+    disque(image, blanc, 100);
+}
 
-    void exo12(sil::Image &image)
-    {
-        float blanc[3] = {1, 1, 1};
-        float noir[3] = {0, 0, 0};
-        disque(image, blanc, 100);
-        disque(image, noir, 90);
-    }
+void exo12(sil::Image &image)
+{
+    // CERCLE
+    float blanc[3] = {1, 1, 1};
+    float noir[3] = {0, 0, 0};
+    disque(image, blanc, 100);
+    disque(image, noir, 90);
+}
 
 
 
