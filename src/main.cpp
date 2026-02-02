@@ -200,58 +200,140 @@ void exo10_assombrissement(sil::Image &image) {
 }
 
 
-void exo11(sil::Image &image) {
+void disque(sil::Image &image, float couleur[3], int taille)
+{
     // DISQUE
     float x_centre = image.width() / 2;
     float y_centre = image.height() / 2;
 
-    float y = sin(0) * 100;
-    float x = cos(0) * 100;
-    cout << x << " " << y << endl;
-    image.pixel(x_centre + x, y_centre + y).g = 1;
+    float y = sin(0) * 0; // juste pour se rappeler que y c'est sin en réalité
+    float x = cos(0) * 0;
 
-    y = sin(M_PI) * 100;
-    x = cos(M_PI) * 100;
-    cout << x << " " << y << endl;
-    image.pixel(x_centre + x, y_centre + y).r = 1;
 
-    y = sin(M_PI/2) * 100;
-    x = cos(M_PI/2) * 100;
-    cout << x << " " << y << endl;
-    cout << M_PI;
-    image.pixel(x_centre + x, y_centre + y).b = 1;
+    // on se déplace sur le cercle trigo
+    // ici de tout à droite à tout en haut
+    // arc haut droit
+    for (float i = 0; i <= 4; i += 0.0001)
+    {
+        // à chaque point sur l'arc de cercle
+        y = (sqrt(i) / 2) * taille;
+        x = (sqrt(4 - i) / 2) * taille;
+        // on part de ce point, on va jusq'au centre vertical de l'image (x_centre)
+        for (int i = x; i >= 0; i -= 1)
+        {
+            image.pixel(x_centre + i, y_centre + y).r = couleur[0];
+            image.pixel(x_centre + i, y_centre + y).g = couleur[1];
+            image.pixel(x_centre + i, y_centre + y).b = couleur[2];
+        }
+    }
 
+    // arc haut gauche
+    for (float i = 0; i <= 4; i += 0.0001)
+    {
+        y = (sqrt(i) / 2) * taille;
+        x = - (sqrt(4 - i) / 2) * taille;
+
+        // même idée mais cette fois ci on se trouve à gauche et on va au centre
+        for (int i = x; i <= 0; i += 1)
+        {
+            image.pixel(x_centre + i, y_centre + y).r = couleur[0];
+            image.pixel(x_centre + i, y_centre + y).g = couleur[1];
+            image.pixel(x_centre + i, y_centre + y).b = couleur[2];
+        }
+    }
+
+    // arc bas droit
+    for (float i = 0; i <= 4; i += 0.0001)
+    {
+        y = -(sqrt(i) / 2) * taille;
+        x = (sqrt(4 - i) / 2) * taille;
+
+        for (int i = x; i >= 0; i -= 1)
+        {
+            image.pixel(x_centre + i, y_centre + y).r = couleur[0];
+            image.pixel(x_centre + i, y_centre + y).g = couleur[1];
+            image.pixel(x_centre + i, y_centre + y).b = couleur[2];
+        }
+    }
+
+    // arc bas gauche
+    for (float i = 0; i <= 4; i += 0.0001)
+    {
+        y = -(sqrt(i) / 2) * taille;
+        x = -(sqrt(4 - i) / 2) * taille;
+
+        for (int i = x; i <= 0; i += 1)
+        {
+            image.pixel(x_centre + i, y_centre + y).r = couleur[0];
+            image.pixel(x_centre + i, y_centre + y).g = couleur[1];
+            image.pixel(x_centre + i, y_centre + y).b = couleur[2];
+        }
+    }
+}
+
+void cercle(sil::Image &image)
+{
+    // DISQUE
+    float x_centre = image.width() / 2;
+    float y_centre = image.height() / 2;
+
+    float y = sin(0) * 0; // juste pour se rappeler que y c'est sin en réalité
+    float x = cos(0) * 0;
+
+
+    // on se déplace sur le cercle trigo
+    // ici de tout à droite à tout en haut
+    // arc haut droit
+    for (float i = 0; i <= 4; i += 0.0001)
+    {
+        // à chaque point sur l'arc de cercle
+        y = (sqrt(i) / 2) * 100;
+        x = (sqrt(4 - i) / 2) * 100;
+        image.pixel(x_centre + x, y_centre + y).g = 1; // on le colorie en vert
+    }
+
+    // arc haut gauche
     for (float i = 0; i <= 4; i += 0.0001)
     {
         y = (sqrt(i) / 2) * 100;
+        x = - (sqrt(4 - i) / 2) * 100;
+        image.pixel(x_centre + x, y_centre + y).g = 1;
+    }
+
+    // arc bas droit
+    for (float i = 0; i <= 4; i += 0.0001)
+    {
+        y = -(sqrt(i) / 2) * 100;
         x = (sqrt(4 - i) / 2) * 100;
         image.pixel(x_centre + x, y_centre + y).g = 1;
     }
 
+    // arc bas gauche
     for (float i = 0; i <= 4; i += 0.0001)
     {
-        y = (sqrt(i) / 2) * 100;
-        x = (sqrt(4 - i) / 2) * 100;
-        image.pixel(x_centre - x, y_centre + y).g = 1;
+        y = -(sqrt(i) / 2) * 100;
+        x = -(sqrt(4 - i) / 2) * 100;
+        image.pixel(x_centre, y_centre).g = 1;
     }
-
-    for (float i = 0; i <= 4; i += 0.0001)
-    {
-        y = (sqrt(i) / 2) * 100;
-        x = (sqrt(4 - i) / 2) * 100;
-        image.pixel(x_centre + x, y_centre - y).g = 1;
-    }
-
-    for (float i = 0; i <= 4; i += 0.0001)
-    {
-        y = (sqrt(i) / 2) * 100;
-        x = (sqrt(4 - i) / 2) * 100;
-        image.pixel(x_centre - x, y_centre - y).r = 1;
-    }
-
-
-
 }
+
+
+    void exo11(sil::Image &image)
+    {
+        float blanc[3] = {1, 1, 1};
+        disque(image, blanc, 100);
+    }
+
+    void exo12(sil::Image &image)
+    {
+        float blanc[3] = {1, 1, 1};
+        float noir[3] = {0, 0, 0};
+        disque(image, blanc, 100);
+        disque(image, noir, 90);
+    }
+
+
+
 
 int main()
 {
@@ -260,7 +342,7 @@ int main()
     sil::Image image{500/*width*/, 500/*height*/};
     // TODO: modifier l'image
 
-    exo11(image);
+    exo12(image);
 
 
     image.save("output/pouet.png");
