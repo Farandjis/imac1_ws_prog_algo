@@ -1,6 +1,8 @@
 #include <iostream>
 #include <sil/sil.hpp>
 #include "random.hpp"
+#include <math.h>
+
 using namespace std;
 using namespace sil;
 
@@ -131,25 +133,134 @@ void exo8(sil::Image &image) {
     {
         for (int y{0}; y < image.height(); ++y)
         {
-            // attention à la confusion !! le point x de image correspond au point y2 de nouvelleImage
-            // de même y de image --> x2 de nouvelleImage
-            float x2 = nouvelleImage.height() - x - 1;
+            // attention à la confusion !! le point x de image correspond au point y de nouvelleImage
+            // de même y de image --> y2 de nouvelleImage
             float y2 = nouvelleImage.width() - y - 1;
-            nouvelleImage.pixel(y2, x2).r = image.pixel(x, y).r; // on prend l'inverse du rouge
-            nouvelleImage.pixel(y2, x2).g = image.pixel(x, y).g;
-            nouvelleImage.pixel(y2, x2).b = image.pixel(x, y).b;
+            nouvelleImage.pixel(y2, x).r = image.pixel(x, y).r; // on prend l'inverse du rouge
+            nouvelleImage.pixel(y2, x).g = image.pixel(x, y).g;
+            nouvelleImage.pixel(y2, x).b = image.pixel(x, y).b;
         }
     }
     image = nouvelleImage;
 }
 
+void exo9(sil::Image &image) {
+    // RGB split
+
+    // imaginons que le rouge, bleu et le vert soient trois calques.
+    // on va déplacer deux des calques
+
+    sil::Image nouvelleImage{image.width(), image.height()};
+
+    for (int x{0}; x < image.width(); ++x)
+    {
+        for (int y{0}; y < image.height(); ++y)
+        {
+            if (x+30 < image.width()) // on avance 30 px le ""calque"" rouge
+                nouvelleImage.pixel(x+30, y).r = image.pixel(x,y).r;
+
+            nouvelleImage.pixel(x, y).g = image.pixel(x, y).g;
+
+            if (x-30 > 0) // on recule de 30px le ""calque"" bleu
+            nouvelleImage.pixel(x-30, y).b = image.pixel(x, y).b;
+        }
+    }
+
+    image = nouvelleImage;
+}
+
+void exo10_eclaircissement(sil::Image &image) {
+    // LUMINOSITÉ : ÉCLAIRCISSEMENT
+    float luminosite = 0.1; // plus la valeur sera grande, plus l'image sera clair, plus on la diminue, plus elle sera sombre
+    for (int x{0}; x < image.width(); ++x)
+    {
+        for (int y{0}; y < image.height(); ++y)
+        {
+            image.pixel(x, y).r = image.pixel(x, y).r + luminosite;
+            image.pixel(x, y).g = image.pixel(x, y).g + luminosite;
+            image.pixel(x, y).b = image.pixel(x, y).b + luminosite;
+
+        }
+    }
+}
+
+void exo10_assombrissement(sil::Image &image) {
+    // LUMINOSITÉ : ASSOMBRISSEMENT
+    float luminosite = -0.1; // plus la valeur sera grande, plus l'image sera clair, plus on la diminue, plus elle sera sombre
+    for (int x{0}; x < image.width(); ++x)
+    {
+        for (int y{0}; y < image.height(); ++y)
+        {
+            image.pixel(x, y).r = image.pixel(x, y).r + luminosite;
+            image.pixel(x, y).g = image.pixel(x, y).g + luminosite;
+            image.pixel(x, y).b = image.pixel(x, y).b + luminosite;
+
+        }
+    }
+}
+
+
+void exo11(sil::Image &image) {
+    // DISQUE
+    float x_centre = image.width() / 2;
+    float y_centre = image.height() / 2;
+
+    float y = sin(0) * 100;
+    float x = cos(0) * 100;
+    cout << x << " " << y << endl;
+    image.pixel(x_centre + x, y_centre + y).g = 1;
+
+    y = sin(M_PI) * 100;
+    x = cos(M_PI) * 100;
+    cout << x << " " << y << endl;
+    image.pixel(x_centre + x, y_centre + y).r = 1;
+
+    y = sin(M_PI/2) * 100;
+    x = cos(M_PI/2) * 100;
+    cout << x << " " << y << endl;
+    cout << M_PI;
+    image.pixel(x_centre + x, y_centre + y).b = 1;
+
+    for (float i = 0; i <= 4; i += 0.0001)
+    {
+        y = (sqrt(i) / 2) * 100;
+        x = (sqrt(4 - i) / 2) * 100;
+        image.pixel(x_centre + x, y_centre + y).g = 1;
+    }
+
+    for (float i = 0; i <= 4; i += 0.0001)
+    {
+        y = (sqrt(i) / 2) * 100;
+        x = (sqrt(4 - i) / 2) * 100;
+        image.pixel(x_centre - x, y_centre + y).g = 1;
+    }
+
+    for (float i = 0; i <= 4; i += 0.0001)
+    {
+        y = (sqrt(i) / 2) * 100;
+        x = (sqrt(4 - i) / 2) * 100;
+        image.pixel(x_centre + x, y_centre - y).g = 1;
+    }
+
+    for (float i = 0; i <= 4; i += 0.0001)
+    {
+        y = (sqrt(i) / 2) * 100;
+        x = (sqrt(4 - i) / 2) * 100;
+        image.pixel(x_centre - x, y_centre - y).r = 1;
+    }
+
+
+
+}
 
 int main()
 {
-    sil::Image image{"images/logo.png"};
+    // sil::Image image{"images/photo.jpg"};
+    // sil::Image image{"images/logo.png"};
+    sil::Image image{500/*width*/, 500/*height*/};
     // TODO: modifier l'image
 
-    exo8(image);
+    exo11(image);
 
 
     image.save("output/pouet.png");
