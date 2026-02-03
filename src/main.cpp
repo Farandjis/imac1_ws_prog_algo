@@ -200,94 +200,77 @@ void exo10_assombrissement(sil::Image &image) {
 }
 
 
-void disque(sil::Image &image, glm::vec3 couleur, int taille)
+void disque(sil::Image &image, glm::vec3 couleur, int taille, float x_centre, float y_centre)
 {
-    // DISQUE
-    float x_centre = image.width() / 2;
-    float y_centre = image.height() / 2;
-
-    float y = sin(0) * 0; // juste pour se rappeler que y c'est sin en réalité
-    float x = cos(0) * 0;
-
-
     // on se déplace sur la moitié du cercle trigo
     // on va tracer un demi cercle en haut, tout en dessinant un demi cercle en bas
     for (float i = 0; i <= 4; i += 0.0001)
     {
         // à chaque point sur l'arc de cercle
-        y = (sqrt(i) / 2) * taille;
-        x = (sqrt(4 - i) / 2) * taille;
+        float y = (sqrt(i) / 2) * taille; // correspond à sin
+        float x = (sqrt(4 - i) / 2) * taille; // correspond à cos
         // on part de ce point, on va jusq'au centre vertical de l'image (x_centre)
         for (int i = x; i >= -x; i -= 1)
         {
-            image.pixel(x_centre + i, y_centre + y) = couleur;
-            image.pixel(x_centre + i, y_centre - y) = couleur;
+            if (x_centre + i < image.width() && y_centre + y < image.height() && x_centre + i >= 0 && y_centre + y >= 0)
+            {
+                image.pixel(x_centre + i, y_centre + y) = couleur;
+                image.pixel(x_centre + i, y_centre - y) = couleur;
+            }
         }
     }
 }
 
-void cercle(sil::Image &image)
+
+
+void cercle(sil::Image &image, glm::vec3 couleur, int taille, float x_centre, float y_centre, int epaisseur)
 {
-    // DISQUE
-    float x_centre = image.width() / 2;
-    float y_centre = image.height() / 2;
-
-    float y = sin(0) * 0; // juste pour se rappeler que y c'est sin en réalité
-    float x = cos(0) * 0;
-
-
-    // on se déplace sur le cercle trigo
-    // ici de tout à droite à tout en haut
-    // arc haut droit
-    for (float i = 0; i <= 4; i += 0.0001)
+    // CERCLE
+    for (float i = 0; i <= 2*M_PI; i += 0.0001)
     {
         // à chaque point sur l'arc de cercle
-        y = (sqrt(i) / 2) * 100;
-        x = (sqrt(4 - i) / 2) * 100;
-        image.pixel(x_centre + x, y_centre + y).g = 1; // on le colorie en vert
+        for (int pourEpaisseur = taille; pourEpaisseur <= taille+epaisseur; pourEpaisseur++)
+        {
+            float y = sin(i) * pourEpaisseur;
+            float x = cos(i) * pourEpaisseur;
+            image.pixel(x_centre + x, y_centre + y) = couleur;
+        }
+
     }
 
-    // arc haut gauche
-    for (float i = 0; i <= 4; i += 0.0001)
-    {
-        y = (sqrt(i) / 2) * 100;
-        x = - (sqrt(4 - i) / 2) * 100;
-        image.pixel(x_centre + x, y_centre + y).g = 1;
-    }
-
-    // arc bas droit
-    for (float i = 0; i <= 4; i += 0.0001)
-    {
-        y = -(sqrt(i) / 2) * 100;
-        x = (sqrt(4 - i) / 2) * 100;
-        image.pixel(x_centre + x, y_centre + y).g = 1;
-    }
-
-    // arc bas gauche
-    for (float i = 0; i <= 4; i += 0.0001)
-    {
-        y = -(sqrt(i) / 2) * 100;
-        x = -(sqrt(4 - i) / 2) * 100;
-        image.pixel(x_centre, y_centre).g = 1;
-    }
 }
+
 
 
 void exo11(sil::Image &image)
 {
     // DISQUE
     glm::vec3 blanc = {1, 1, 1};
-    disque(image, blanc, 100);
-}
+    disque(image, blanc, 100, image.width() / 2, image.height() / 2);
+    }
 
 void exo12(sil::Image &image)
 {
     // CERCLE
     glm::vec3 blanc = {1, 1, 1};
-    glm::vec3 noir = {0, 0, 0};
-    disque(image, blanc, 100);
-    disque(image, noir, 90);
+    cercle(image, blanc, 100, image.width() / 2, image.height() / 2, 10);
+
 }
+
+void exo13(sil::Image &image)
+{
+    // ANIMATION
+    Image imageParDefaut = image;
+    glm::vec3 blanc = {1, 1, 1};
+
+    for (int i = 0; i < image.width(); i += image.width() / 25) // 10 est le nombre d'images générés
+    {
+        disque(image, blanc, 100, i, image.height() / 2);
+        image.save("output/exo13_" + to_string(i) + ".png"); // on génère l'image png
+        image = imageParDefaut; // on rafraîchit l'arrière plan
+    }
+}
+
 
 
 
