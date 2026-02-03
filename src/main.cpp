@@ -233,7 +233,10 @@ void cercle(sil::Image &image, glm::vec3 couleur, int taille, float x_centre, fl
         {
             float y = sin(i) * pourEpaisseur;
             float x = cos(i) * pourEpaisseur;
-            image.pixel(x_centre + x, y_centre + y) = couleur;
+            if (x_centre + x < image.width() && y_centre + y < image.height() && x_centre + x >= 0 && y_centre + y >= 0)
+            {
+                image.pixel(x_centre + x, y_centre + y) = couleur;
+            }
         }
 
     }
@@ -271,7 +274,26 @@ void exo13(sil::Image &image)
     }
 }
 
+void exo14(sil::Image &image)
+{
+    // ROSACE
+    glm::vec3 blanc = {1, 1, 1};
+    float x_centre = image.width() / 2;
+    float y_centre = image.height() / 2;
+    cercle(image, blanc, 100, x_centre, y_centre, 3); // dessine le cercle du milieu
 
+    // on parcourt le cercle du milieu
+    for (float i = 0; i <= M_PI*2; i += M_PI / 3)
+    {
+        float y = sin(i)*100;
+        float x = cos(i)*100;
+
+        // on dessine un cercle avec comme centre, le point du cercle du milieu
+        cercle(image, blanc, 100, x_centre + x, y_centre + y, 3);
+
+    }
+
+}
 
 
 
@@ -282,7 +304,7 @@ int main()
     sil::Image image{500/*width*/, 500/*height*/};
     // TODO: modifier l'image
 
-    exo12(image);
+    exo14(image);
 
 
     image.save("output/pouet.png");
