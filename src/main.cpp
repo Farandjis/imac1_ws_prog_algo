@@ -215,6 +215,7 @@ void disque(sil::Image &image, glm::vec3 couleur, int taille)
     // arc haut droit
     for (float i = 0; i <= 4; i += 0.0001)
     {
+        // ARC HAUT DROIT
         // à chaque point sur l'arc de cercle
         y = (sqrt(i) / 2) * taille;
         x = (sqrt(4 - i) / 2) * taille;
@@ -223,42 +224,24 @@ void disque(sil::Image &image, glm::vec3 couleur, int taille)
         {
             image.pixel(x_centre + i, y_centre + y) = couleur;
         }
-    }
 
-    // arc haut gauche
-    for (float i = 0; i <= 4; i += 0.0001)
-    {
-        y = (sqrt(i) / 2) * taille;
-        x = - (sqrt(4 - i) / 2) * taille;
-
+        // ARC HAUT GAUCHE
         // même idée mais cette fois ci on se trouve à gauche et on va au centre
-        for (int i = x; i <= 0; i += 1)
+        for (int i = -x; i <= 0; i += 1)
         {
             image.pixel(x_centre + i, y_centre + y) = couleur;
         }
-    }
 
-    // arc bas droit
-    for (float i = 0; i <= 4; i += 0.0001)
-    {
-        y = -(sqrt(i) / 2) * taille;
-        x = (sqrt(4 - i) / 2) * taille;
-
+        // ARC BAS DROIT
         for (int i = x; i >= 0; i -= 1)
         {
-            image.pixel(x_centre + i, y_centre + y) = couleur;
+            image.pixel(x_centre + i, y_centre - y) = couleur;
         }
-    }
 
-    // arc bas gauche
-    for (float i = 0; i <= 4; i += 0.0001)
-    {
-        y = -(sqrt(i) / 2) * taille;
-        x = -(sqrt(4 - i) / 2) * taille;
-
-        for (int i = x; i <= 0; i += 1)
+        // ARC BAS GAUCHE
+        for (int i = -x; i <= 0; i += 1)
         {
-            image.pixel(x_centre + i, y_centre + y) = couleur;
+            image.pixel(x_centre + i, y_centre - y) = couleur;
         }
     }
 }
