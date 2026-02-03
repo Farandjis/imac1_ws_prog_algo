@@ -200,7 +200,7 @@ void exo10_assombrissement(sil::Image &image) {
 }
 
 
-void disque(sil::Image &image, float couleur[3], int taille)
+void disque(sil::Image &image, glm::vec3 couleur, int taille)
 {
     // DISQUE
     float x_centre = image.width() / 2;
@@ -221,9 +221,7 @@ void disque(sil::Image &image, float couleur[3], int taille)
         // on part de ce point, on va jusq'au centre vertical de l'image (x_centre)
         for (int i = x; i >= 0; i -= 1)
         {
-            image.pixel(x_centre + i, y_centre + y).r = couleur[0];
-            image.pixel(x_centre + i, y_centre + y).g = couleur[1];
-            image.pixel(x_centre + i, y_centre + y).b = couleur[2];
+            image.pixel(x_centre + i, y_centre + y) = couleur;
         }
     }
 
@@ -236,9 +234,7 @@ void disque(sil::Image &image, float couleur[3], int taille)
         // même idée mais cette fois ci on se trouve à gauche et on va au centre
         for (int i = x; i <= 0; i += 1)
         {
-            image.pixel(x_centre + i, y_centre + y).r = couleur[0];
-            image.pixel(x_centre + i, y_centre + y).g = couleur[1];
-            image.pixel(x_centre + i, y_centre + y).b = couleur[2];
+            image.pixel(x_centre + i, y_centre + y) = couleur;
         }
     }
 
@@ -250,9 +246,7 @@ void disque(sil::Image &image, float couleur[3], int taille)
 
         for (int i = x; i >= 0; i -= 1)
         {
-            image.pixel(x_centre + i, y_centre + y).r = couleur[0];
-            image.pixel(x_centre + i, y_centre + y).g = couleur[1];
-            image.pixel(x_centre + i, y_centre + y).b = couleur[2];
+            image.pixel(x_centre + i, y_centre + y) = couleur;
         }
     }
 
@@ -264,9 +258,7 @@ void disque(sil::Image &image, float couleur[3], int taille)
 
         for (int i = x; i <= 0; i += 1)
         {
-            image.pixel(x_centre + i, y_centre + y).r = couleur[0];
-            image.pixel(x_centre + i, y_centre + y).g = couleur[1];
-            image.pixel(x_centre + i, y_centre + y).b = couleur[2];
+            image.pixel(x_centre + i, y_centre + y) = couleur;
         }
     }
 }
@@ -321,15 +313,15 @@ void cercle(sil::Image &image)
 void exo11(sil::Image &image)
 {
     // DISQUE
-    float blanc[3] = {1, 1, 1};
+    glm::vec3 blanc = {1, 1, 1};
     disque(image, blanc, 100);
 }
 
 void exo12(sil::Image &image)
 {
     // CERCLE
-    float blanc[3] = {1, 1, 1};
-    float noir[3] = {0, 0, 0};
+    glm::vec3 blanc = {1, 1, 1};
+    glm::vec3 noir = {1, 1, 1};
     disque(image, blanc, 100);
     disque(image, noir, 90);
 }
@@ -344,7 +336,7 @@ int main()
     sil::Image image{500/*width*/, 500/*height*/};
     // TODO: modifier l'image
 
-    exo12(image);
+    exo11(image);
 
 
     image.save("output/pouet.png");
