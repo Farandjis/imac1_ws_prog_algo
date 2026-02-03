@@ -210,37 +210,17 @@ void disque(sil::Image &image, glm::vec3 couleur, int taille)
     float x = cos(0) * 0;
 
 
-    // on se déplace sur le cercle trigo
-    // ici de tout à droite à tout en haut
-    // arc haut droit
+    // on se déplace sur la moitié du cercle trigo
+    // on va tracer un demi cercle en haut, tout en dessinant un demi cercle en bas
     for (float i = 0; i <= 4; i += 0.0001)
     {
-        // ARC HAUT DROIT
         // à chaque point sur l'arc de cercle
         y = (sqrt(i) / 2) * taille;
         x = (sqrt(4 - i) / 2) * taille;
         // on part de ce point, on va jusq'au centre vertical de l'image (x_centre)
-        for (int i = x; i >= 0; i -= 1)
+        for (int i = x; i >= -x; i -= 1)
         {
             image.pixel(x_centre + i, y_centre + y) = couleur;
-        }
-
-        // ARC HAUT GAUCHE
-        // même idée mais cette fois ci on se trouve à gauche et on va au centre
-        for (int i = -x; i <= 0; i += 1)
-        {
-            image.pixel(x_centre + i, y_centre + y) = couleur;
-        }
-
-        // ARC BAS DROIT
-        for (int i = x; i >= 0; i -= 1)
-        {
-            image.pixel(x_centre + i, y_centre - y) = couleur;
-        }
-
-        // ARC BAS GAUCHE
-        for (int i = -x; i <= 0; i += 1)
-        {
             image.pixel(x_centre + i, y_centre - y) = couleur;
         }
     }
@@ -304,7 +284,7 @@ void exo12(sil::Image &image)
 {
     // CERCLE
     glm::vec3 blanc = {1, 1, 1};
-    glm::vec3 noir = {1, 1, 1};
+    glm::vec3 noir = {0, 0, 0};
     disque(image, blanc, 100);
     disque(image, noir, 90);
 }
@@ -319,7 +299,7 @@ int main()
     sil::Image image{500/*width*/, 500/*height*/};
     // TODO: modifier l'image
 
-    exo11(image);
+    exo12(image);
 
 
     image.save("output/pouet.png");
