@@ -295,16 +295,61 @@ void exo14(sil::Image &image)
 
 }
 
+void insertionImage(Image &fond, Image &aInserer, int x, int y)
+{
+    for (int i = 0; i < aInserer.width(); i++)
+    {
+        for (int j = 0; j < aInserer.height(); j++)
+        {
+            fond.pixel(x+i,y+j) = aInserer.pixel(i,j);
+        }
+    }
+}
 
+
+void exo15(sil::Image &image) {
+    // MOSAÏQUE
+
+    sil::Image fond{image.width()*5, image.height()*5};
+
+    for (int i = 0; i < fond.width(); i += fond.width() / 5)
+    {
+        for (int j = 0; j < fond.width(); j += fond.height() / 5)
+        {
+            insertionImage(fond, image, i, j);
+        }
+    }
+    image = fond; // pour renvoyer le fond comme image
+}
+
+void exo16(sil::Image &image) {
+    // MOSAÏQUE MIROIR
+
+    sil::Image fond{image.width()*5, image.height()*5};
+
+    for (int i = 0; i < fond.width(); i += fond.width() / 5)
+    {
+        for (int j = 0; j < fond.width(); j += fond.height() / 5)
+        {
+            Image imageATraiter = image;
+            if (i / (fond.width() / 5) % 2 == 1)
+            {
+                  exo6(imageATraiter);
+            }
+            insertionImage(fond, imageATraiter, i, j);
+        }
+    }
+    image = fond;  // pour renvoyer le fond comme image
+}
 
 int main()
 {
     // sil::Image image{"images/photo.jpg"};
-    // sil::Image image{"images/logo.png"};
-    sil::Image image{500/*width*/, 500/*height*/};
+    sil::Image image{"images/logo.png"};
+    // sil::Image image{500/*width*/, 500/*height*/};
     // TODO: modifier l'image
 
-    exo14(image);
+    exo16(image);
 
 
     image.save("output/pouet.png");
