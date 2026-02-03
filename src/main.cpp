@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <iostream>
 #include <sil/sil.hpp>
 #include "random.hpp"
@@ -342,6 +343,67 @@ void exo16(sil::Image &image) {
     image = fond;  // pour renvoyer le fond comme image
 }
 
+
+void exo17(sil::Image &image) {
+    // GLITCH
+
+    /* Idée :
+     *      1. On choisit une position aléatoire sur l'image.
+     *      2. On choisit une autre position aléatoire sur l'image.
+     *      3. On choisit les dimensions d'un rectangle de manière aléatoire
+     *      4. On parcourt une boucle imbriquée longueur largeur à l'aide du rectangle
+     *      5. On échange chaque pixel entre les deux positions
+    */
+
+    set_random_seed(0);
+    // On génère un glitch par itération
+    for (int i = 0; i < 255; i++)
+    {
+        // 1. position 1
+        int x1 = random_int(0, image.width());
+        int y1 = random_int(0, image.height());
+
+        // 2. position 2
+        int x2 = random_int(0, image.width());
+        int y2 = random_int(0, image.height());
+
+        // 3. rectangle
+        int lMax = random_int(0, 20); // largeur
+        int hMax = random_int(0, 10); // hauteur
+        for (int l = 0; l < lMax; l++)
+        {
+            for (int h = 0; h < hMax; h++)
+            {;
+                int x1bis = (x1+l < image.width()) ? x1+l : l;
+                int y1bis = (y1+h < image.height()) ? y1+h : h;
+                int x2bis = (x2+l < image.width()) ? x2+l : l;
+                int y2bis = (y2+h < image.height()) ? y2+h : h;
+                glm::vec3 temporaire = image.pixel(x1bis, y1bis);
+                image.pixel(x1bis, y1bis) = image.pixel(x2bis, y1bis);
+                image.pixel(x2bis, y2bis) = temporaire;
+            }
+        }
+    }
+}
+
+float brightness(glm::vec3 const pixel)
+{
+    return (pixel.r + pixel.g + pixel.b) / 3;
+}
+
+
+void exo18(sil::Image &image) {
+    for (int i = 0; i < image.pixels().size() - image.width(); i += image.width())
+    {
+        std::sort(image.pixels().begin() + i, image.pixels().begin() + i + image.width(),
+    [](const glm::vec3& pixel1, const glm::vec3& pixel2)
+    {
+        return brightness(pixel1) < brightness(pixel2);
+    });
+    }
+
+    }
+
 int main()
 {
     // sil::Image image{"images/photo.jpg"};
@@ -349,7 +411,7 @@ int main()
     // sil::Image image{500/*width*/, 500/*height*/};
     // TODO: modifier l'image
 
-    exo16(image);
+    exo18(image);
 
 
     image.save("output/pouet.png");
