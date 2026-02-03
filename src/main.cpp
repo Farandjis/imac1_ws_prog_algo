@@ -393,16 +393,28 @@ float brightness(glm::vec3 const pixel)
 
 
 void exo18(sil::Image &image) {
+    set_random_seed(0);
     for (int i = 0; i < image.pixels().size() - image.width(); i += image.width())
     {
-        std::sort(image.pixels().begin() + i, image.pixels().begin() + i + image.width(),
-    [](const glm::vec3& pixel1, const glm::vec3& pixel2)
-    {
-        return brightness(pixel1) < brightness(pixel2);
-    });
-    }
+        int longueur = random_int(0, 100); // nombre de pixels concernés par le trie
+
+        // on trie 2x par ligne
+        for (int j = 0; j < 2; j++)
+        {
+            // on prend une position aléatoire sur la ligne, à partir de cette position on mélage
+            int positionAleatoireSurLaLigne = random_int(i, i + image.width());
+
+            // on trie
+            std::sort(image.pixels().begin() + positionAleatoireSurLaLigne, image.pixels().begin() +positionAleatoireSurLaLigne + longueur,
+            [](const glm::vec3& pixel1, const glm::vec3& pixel2)
+                    {
+                        return brightness(pixel1) < brightness(pixel2);
+                    });
+        }
 
     }
+
+}
 
 int main()
 {
