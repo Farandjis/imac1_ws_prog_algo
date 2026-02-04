@@ -467,75 +467,103 @@ void exo20_1(sil::Image &image) {
     }
 }
 
-void sRGB_vers_Linear(sil::Image &image) {
-    // conversion sRGB vers linear
-    for (int x{0}; x < image.width(); ++x)
-    {
-        for (int y{0}; y < image.height(); ++y)
-        {
-            if (0 <= image.pixel(x, y).r && image.pixel(x, y).r <= 0.04045)
-            {
-                image.pixel(x, y).r /= 12.92;
-            }
-            else
-            {
-                image.pixel(x, y).r = pow((image.pixel(x, y).r + 0.055)/1.055, 2.4);
-            }
+glm::vec3 sRGB_vers_Linear(float canalRouge, float canalVert, float canalBleu) {
+    // conversion d'une valeur sRGB vers linear
+    if (0 <= canalRouge && canalRouge <= 0.04045) canalRouge /= 12.92;
+    else canalRouge = pow((canalRouge + 0.055)/1.055, 2.4);
 
-            if (0 <= image.pixel(x, y).g && image.pixel(x, y).g <= 0.04045)
-            {
-                image.pixel(x, y).g /= 12.92;
-            }
-            else
-            {
-                image.pixel(x, y).g = pow((image.pixel(x, y).g + 0.055)/1.055, 2.4);
-            }
+    if (0 <= canalVert && canalVert <= 0.04045) canalVert /= 12.92;
+    else canalVert = pow((canalVert + 0.055)/1.055, 2.4);
 
-            if (0 <= image.pixel(x, y).b && image.pixel(x, y).b <= 0.04045)
-            {
-                image.pixel(x, y).b /= 12.92;
-            }
-            else
-            {
-                image.pixel(x, y).b = pow((image.pixel(x, y).b + 0.055)/1.055, 2.4);
-            }
-        }
-    }
+    if (0 <= canalBleu && canalBleu <= 0.04045) canalBleu /= 12.92;
+    else canalBleu = pow((canalBleu + 0.055)/1.055, 2.4);
 
+
+    return {canalRouge, canalVert, canalBleu};
+}
+
+glm::vec3 linear_vers_sRGB(float canalRouge, float canalVert, float canalBleu) {
+    // conversion d'une valeur sRGB vers linear
+    if (0 <= canalRouge && canalRouge <= 0.0031308) canalRouge *= 12.92;
+    else canalRouge = 1.055 * pow(canalRouge, 1/2.4) - 0.055;
+
+    if (0 <= canalVert && canalVert <= 0.0031308) canalVert *= 12.92;
+    else canalVert = 1.055 * pow(canalVert, 1/2.4) - 0.055;
+
+    if (0 <= canalBleu && canalBleu <= 0.0031308) canalBleu *= 12.92;
+    else canalBleu = 1.055 * pow(canalBleu, 1/2.4) - 0.055;
+
+
+    return {canalRouge, canalVert, canalBleu};
 }
 
 
-void linear_vers_oklab(sil::Image &image) {
-    // conversion sRGB vers linear
-    for (int x{0}; x < image.width(); ++x)
-    {
-        for (int y{0}; y < image.height(); ++y)
-        {
-            float l = 0.4122214708f * image.pixel(x,y).r + 0.5363325363f * image.pixel(x,y).g + 0.0514459929f * image.pixel(x,y).b;
-            float m = 0.2119034982f * image.pixel(x,y).r + 0.6806995451f * image.pixel(x,y).g + 0.1073969566f * image.pixel(x,y).b;
-            float s = 0.0883024619f * image.pixel(x,y).r + 0.2817188376f * image.pixel(x,y).g + 0.6299787005f * image.pixel(x,y).b;
+glm::vec3 linear_vers_oklab(float canalRouge, float canalVert, float canalBleu) {
+    // conversion linear vers oklab
 
-            float l_ = cbrtf(l);
-            float m_ = cbrtf(m);
-            float s_ = cbrtf(s);
+    float l = 0.4122214708f * canalRouge + 0.5363325363f * canalVert + 0.0514459929f * canalBleu;
+    float m = 0.2119034982f * canalRouge + 0.6806995451f * canalVert + 0.1073969566f * canalBleu;
+    float s = 0.0883024619f * canalRouge + 0.2817188376f * canalVert + 0.6299787005f * canalBleu;
 
-            image.pixel(x,y).r = l_;
-            image.pixel(x,y).g = m_;
-            image.pixel(x,y).b = s_;
-        }
-    }
+    canalRouge = cbrtf(l);
+    canalVert = cbrtf(m);
+    canalBleu = cbrtf(s);
 
+
+    return {
+        0.2104542553f*canalRouge + 0.7936177850f*canalVert - 0.0040720468f*canalBleu,
+        1.9779984951f*canalRouge - 2.4285922050f*canalVert + 0.4505937099f*canalBleu,
+        0.0259040371f*canalRouge + 0.7827717662f*canalVert - 0.8086757660f*canalBleu,
+    };
 }
 
+glm::vec3 oklab_vers_linear(float canalRouge, float canalVert, float canalBleu) {
+    // conversion linear vers oklab
+
+    float l_ = canalRouge + 0.3963377774f * canalVert + 0.2158037573f * canalBleu;
+    float m_ = canalRouge - 0.1055613458f * canalVert - 0.0638541728f * canalBleu;
+    float s_ = canalRouge - 0.0894841775f * canalVert - 1.2914855480f * canalBleu;
+
+    canalRouge = l_*l_*l_;
+    canalVert = m_*m_*m_;
+    canalBleu = s_*s_*s_;
+
+    return {
+        +4.0767416621f * canalRouge - 3.3077115913f * canalVert + 0.2309699292f * canalBleu,
+        -1.2684380046f * canalRouge + 2.6097574011f * canalVert - 0.3413193965f * canalBleu,
+        -0.0041960863f * canalRouge - 0.7034186147f * canalVert + 1.7076147010f * canalBleu,
+    };
+}
 
 
 void exo20_2(sil::Image &image) {
-    sil::Image image2{300/*width*/, 200/*height*/};
-    image = image2; // juste pour prendre la forme de l'image de l'énnoncé
+    /*
     exo20_1(image);
     sRGB_vers_Linear(image);
     linear_vers_oklab(image);
-    glm::mix()
+    */
+    sil::Image image2{300/*width*/, 200/*height*/};
+    image = image2; // juste pour prendre la forme de l'image de l'énnoncé
+
+    float valeurPourIncrementer = 1 / (float) image.width(); // on calcul une valeur que l'on va multiplier
+    for (float x{0}; x < image.width(); ++x)
+    {
+        for (float y{0}; y < image.height(); ++y)
+        {
+            glm::vec3 preparationDuRouge = {1, 0 , 0};
+            preparationDuRouge = sRGB_vers_Linear(preparationDuRouge[0], image.pixel(x, y).g, image.pixel(x, y).b);
+            preparationDuRouge = linear_vers_oklab(preparationDuRouge[0], image.pixel(x, y).g, image.pixel(x, y).b);
+
+            glm::vec3 preparationDuVert = {0, 1, 0};
+            preparationDuVert = sRGB_vers_Linear(image.pixel(x, y).r, preparationDuVert[1] , image.pixel(x, y).b);
+            preparationDuVert = linear_vers_oklab(image.pixel(x,y).r, preparationDuVert[1], image.pixel(x, y).b);
+
+            image.pixel(x, y) = glm::mix(preparationDuRouge, preparationDuVert , x/image.width());
+
+            image.pixel(x, y) = oklab_vers_linear(image.pixel(x,y).r, image.pixel(x,y).g, image.pixel(x,y).b);
+            image.pixel(x, y) = linear_vers_sRGB(image.pixel(x,y).r, image.pixel(x,y).g, image.pixel(x,y).b);
+        }
+    }
 }
 
 
