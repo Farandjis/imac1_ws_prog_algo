@@ -453,6 +453,7 @@ void exo19(sil::Image &image) {
 }
 
 void exo20_1(sil::Image &image) {
+    // DÉGRADÉS DANS L'ESPACE DE COULEUR LAB 1/2
     sil::Image image2{300/*width*/, 200/*height*/};
     image = image2; // juste pour prendre la forme de l'image de l'énnoncé
 
@@ -537,11 +538,7 @@ glm::vec3 oklab_vers_linear(float canalRouge, float canalVert, float canalBleu) 
 
 
 void exo20_2(sil::Image &image) {
-    /*
-    exo20_1(image);
-    sRGB_vers_Linear(image);
-    linear_vers_oklab(image);
-    */
+    // DÉGRADÉS DANS L'ESPACE DE COULEUR LAB 2/2
     sil::Image image2{300/*width*/, 200/*height*/};
     image = image2; // juste pour prendre la forme de l'image de l'énnoncé
 
@@ -567,15 +564,43 @@ void exo20_2(sil::Image &image) {
 }
 
 
+void exo21(sil::Image &image) {
+    // TRAMAGE
+    const int bayer_n = 4;
+    float bayer_matrix_4x4[][bayer_n] = {
+        { -0.5, 0, -0.375, 0.125 },
+        { 0.25, -0.25, 0.375, - 0.125 },
+        { -0.3125, 0.1875, -0.4375, 0.0625 },
+        { 0.4375, -0.0625, 0.3125, -0.1875 },
+    };
+
+    float bayer_r = 1;
+    float NUM_VALUES = 1;
+
+    for (int sy = 0; sy < image.height(); sy++) {
+        for (int sx = 0; sx < image.width(); sx++) {
+            float luminance = (0.3*image.pixel(sx,sy).r + 0.59*image.pixel(sx,sy).g + 0.11*image.pixel(sx,sy).b) / 3;
+            glm::vec3 color_result = {1, 1, 1};
+            float bayer_value = bayer_matrix_4x4[sx % bayer_n][sy % bayer_n];
+            float output_color = luminance + (bayer_r * bayer_value);
+            // Changer la couleur de l'écran du bleu au blanc
+            if (output_color < (NUM_VALUES / 2.0f)) {
+                color_result = {0, 0, 0};
+            }
+            image.pixel(sx, sy) = color_result;
+        }
+    }
+}
+
 
 int main()
 {
-    // sil::Image image{"images/photo.jpg"};
+    sil::Image image{"images/photo.jpg"};
     // sil::Image image{"images/logo.png"};
-    sil::Image image{500/*width*/, 500/*height*/};
+    // sil::Image image{500/*width*/, 500/*height*/};
     // TODO: modifier l'image
 
-    exo20_2(image);
+    exo21(image);
 
 
     image.save("output/pouet.png");
