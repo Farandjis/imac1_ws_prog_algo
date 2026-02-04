@@ -504,11 +504,38 @@ void sRGB_vers_Linear(sil::Image &image) {
 
 }
 
+
+void linear_vers_oklab(sil::Image &image) {
+    // conversion sRGB vers linear
+    for (int x{0}; x < image.width(); ++x)
+    {
+        for (int y{0}; y < image.height(); ++y)
+        {
+            float l = 0.4122214708f * image.pixel(x,y).r + 0.5363325363f * image.pixel(x,y).g + 0.0514459929f * image.pixel(x,y).b;
+            float m = 0.2119034982f * image.pixel(x,y).r + 0.6806995451f * image.pixel(x,y).g + 0.1073969566f * image.pixel(x,y).b;
+            float s = 0.0883024619f * image.pixel(x,y).r + 0.2817188376f * image.pixel(x,y).g + 0.6299787005f * image.pixel(x,y).b;
+
+            float l_ = cbrtf(l);
+            float m_ = cbrtf(m);
+            float s_ = cbrtf(s);
+
+            image.pixel(x,y).r = l_;
+            image.pixel(x,y).g = m_;
+            image.pixel(x,y).b = s_;
+        }
+    }
+
+}
+
+
+
 void exo20_2(sil::Image &image) {
     sil::Image image2{300/*width*/, 200/*height*/};
     image = image2; // juste pour prendre la forme de l'image de l'énnoncé
     exo20_1(image);
     sRGB_vers_Linear(image);
+    linear_vers_oklab(image);
+    glm::mix()
 }
 
 
