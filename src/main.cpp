@@ -579,7 +579,7 @@ void exo21(sil::Image &image) {
 
     for (int sy = 0; sy < image.height(); sy++) {
         for (int sx = 0; sx < image.width(); sx++) {
-            float luminance = (0.3*image.pixel(sx,sy).r + 0.59*image.pixel(sx,sy).g + 0.11*image.pixel(sx,sy).b) / 3;
+            float luminance = (0.3*image.pixel(sx,sy).r + 0.59*image.pixel(sx,sy).g + 0.11*image.pixel(sx,sy).b);
             glm::vec3 color_result = {1, 1, 1};
             float bayer_value = bayer_matrix_4x4[sx % bayer_n][sy % bayer_n];
             float output_color = luminance + (bayer_r * bayer_value);
