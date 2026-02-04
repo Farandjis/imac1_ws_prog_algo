@@ -86,7 +86,6 @@ void exo5(sil::Image &image) {
             // on obtient un dégradé
         }
     }
-
 }
 
 void exo6(sil::Image &image) {
@@ -394,6 +393,7 @@ float brightness(glm::vec3 const pixel)
 
 
 void exo18(sil::Image &image) {
+    // TRI DE PIXELS
     set_random_seed(0);
     for (int i = 0; i < image.pixels().size() - image.width(); i += image.width())
     {
@@ -420,6 +420,7 @@ void exo18(sil::Image &image) {
 
 
 void exo19(sil::Image &image) {
+    // FRACTAL DE MANDELBROT
     glm::vec3 blanc = {1, 1, 1};
 
     for (int x = 0; x < image.width(); x++){
@@ -451,6 +452,67 @@ void exo19(sil::Image &image) {
     }
 }
 
+void exo20_1(sil::Image &image) {
+    sil::Image image2{300/*width*/, 200/*height*/};
+    image = image2; // juste pour prendre la forme de l'image de l'énnoncé
+
+    float valeurPourIncrementer = 1 / (float) image.width(); // on calcul une valeur que l'on va multiplier
+    for (int x{0}; x < image.width(); ++x)
+    {
+        for (int y{0}; y < image.height(); ++y)
+        {
+            image.pixel(x, y).r = 1 - valeurPourIncrementer * x; // plus x est grand, plus le produit sera grand et donc plus ce sera clair
+            image.pixel(x, y).g = valeurPourIncrementer * x;
+        }
+    }
+}
+
+void sRGB_vers_Linear(sil::Image &image) {
+    // conversion sRGB vers linear
+    for (int x{0}; x < image.width(); ++x)
+    {
+        for (int y{0}; y < image.height(); ++y)
+        {
+            if (0 <= image.pixel(x, y).r && image.pixel(x, y).r <= 0.04045)
+            {
+                image.pixel(x, y).r /= 12.92;
+            }
+            else
+            {
+                image.pixel(x, y).r = pow((image.pixel(x, y).r + 0.055)/1.055, 2.4);
+            }
+
+            if (0 <= image.pixel(x, y).g && image.pixel(x, y).g <= 0.04045)
+            {
+                image.pixel(x, y).g /= 12.92;
+            }
+            else
+            {
+                image.pixel(x, y).g = pow((image.pixel(x, y).g + 0.055)/1.055, 2.4);
+            }
+
+            if (0 <= image.pixel(x, y).b && image.pixel(x, y).b <= 0.04045)
+            {
+                image.pixel(x, y).b /= 12.92;
+            }
+            else
+            {
+                image.pixel(x, y).b = pow((image.pixel(x, y).b + 0.055)/1.055, 2.4);
+            }
+        }
+    }
+
+}
+
+void exo20_2(sil::Image &image) {
+    sil::Image image2{300/*width*/, 200/*height*/};
+    image = image2; // juste pour prendre la forme de l'image de l'énnoncé
+    exo20_1(image);
+    sRGB_vers_Linear(image);
+}
+
+
+
 int main()
 {
     // sil::Image image{"images/photo.jpg"};
@@ -458,7 +520,7 @@ int main()
     sil::Image image{500/*width*/, 500/*height*/};
     // TODO: modifier l'image
 
-    exo19(image);
+    exo20_2(image);
 
 
     image.save("output/pouet.png");
