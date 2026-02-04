@@ -3,6 +3,7 @@
 #include <sil/sil.hpp>
 #include "random.hpp"
 #include <math.h>
+#include <complex>
 
 using namespace std;
 using namespace sil;
@@ -416,14 +417,48 @@ void exo18(sil::Image &image) {
 
 }
 
+
+
+void exo19(sil::Image &image) {
+    glm::vec3 blanc = {1, 1, 1};
+
+    for (int x = 0; x < image.width(); x++){
+        for (int y = 0; y < image.height(); y++)
+        {
+            float real = -2.f + 4.f * x / image.width();
+            float imag = -2.f + 4.f * y / image.height();
+
+            std::complex<double> c(real, imag); // pixel choisi
+            std::complex<double> z(0.0, 0.0);
+
+            float i = 0;
+
+            while (i < 20 && abs(z) < 2)
+            {
+                z = z*z + c;
+
+                if (abs(z) < 2){
+                    image.pixel(x,y) = blanc;
+                }
+                else
+                {
+                    image.pixel(x,y) = {i/20 , i/20, i/20};
+                }
+
+                i++;
+            }
+        }
+    }
+}
+
 int main()
 {
     // sil::Image image{"images/photo.jpg"};
-    sil::Image image{"images/logo.png"};
-    // sil::Image image{500/*width*/, 500/*height*/};
+    // sil::Image image{"images/logo.png"};
+    sil::Image image{500/*width*/, 500/*height*/};
     // TODO: modifier l'image
 
-    exo18(image);
+    exo19(image);
 
 
     image.save("output/pouet.png");
