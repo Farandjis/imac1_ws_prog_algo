@@ -778,33 +778,10 @@ void exo24_sharpen(sil::Image &image)
     exo24(image, matrice);
 }
 
-void exo24_bb(sil::Image &image)
-{
-    int P = 1;
-    // https://www.f-legrand.fr/scidoc/docmml/image/filtrage/convolution/convolution.html
-    float epsilon = 0.05;
-    float sigma = P*1.0/sqrt(-2*log(epsilon));
-    int size = 3; // ou 10
-    vector<vector<float>> h(size, vector<float>(size, 0));
-    int som = 0;
-    for (int m = -P; m < P+1; m++)
-    {
-        for (int n = -P; n < P+1; n++){
-            h[m+P][n+P] = exp(-(n*n+m*m)/(2*sigma*sigma));
-            som += h[m+P][n+P];
-        }
-    }
-    for (int i = 0; i < size; i++)
-        for (int j = 0; j < size; j++)
-            h[i][j] = h[i][j]/som;
 
-    exo24(image, h);
-}
-
-void exo25(sil::Image &image)
+void exo25(sil::Image &image, int size)
 {
     // CONVOLUTION : FILTES SÉPARABLES (ici : code de blox blur séparé)
-    int size = 18; // ou 10
     float v = 1.f / (size);
     vector<float> matrice(size, v);
 
@@ -855,15 +832,48 @@ void exo25(sil::Image &image)
 }
 
 
+void exo26(sil::Image &image)
+{
+    exo3(image);
+    Image imageFlou = image;
+    Image imageTresFlou = image;
+    exo25(imageFlou, 1);
+    exo25(imageTresFlou, 200);
+
+    for (int x = 0; x < image.width(); ++x)
+        for (int y = 0; y < image.height(); ++y)
+        {
+            float dog = imageFlou.pixel(x,y).r - imageTresFlou.pixel(x,y).r;
+            dog = 0.5f + dog * 2.0f; // facteur à ajuster
+
+            imageFlou.pixel(x,y) = {dog, dog, dog};
+
+            /*
+            imageFlou.pixel(x,y).r -= imageTresFlou.pixel(x,y).r;
+            imageFlou.pixel(x,y).g -= imageTresFlou.pixel(x,y).g;
+            imageFlou.pixel(x,y).b -= imageTresFlou.pixel(x,y).b;
+
+            */
+            // cout << calculLuminance(imageFlou.pixel(x,y))*10 << endl;
+            if (dog < 0.0f)
+                imageFlou.pixel(x,y) = {1, 1, 1};
+            else
+                imageFlou.pixel(x,y) = {0, 0, 0};
+
+        }
+
+    image = imageFlou;
+}
+
 int main()
 {
     // sil::Image image{"images/photo_faible_contraste.jpg"};
-    // sil::Image image{"images/photo.jpg"};
-    sil::Image image{"images/logo.png"};
+    sil::Image image{"images/photo.jpg"};
+    // sil::Image image{"images/logo.png"};
     // sil::Image image{500/*width*/, 500/*height*/};
     // TODO: modifier l'image
 
-    exo25(image);
+    exo21(image);
 
     image.save("output/pouet.png");
 

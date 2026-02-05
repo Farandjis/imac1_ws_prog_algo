@@ -209,7 +209,28 @@ A la place, je me suis aidé du cercle trigonométrique et du tableau.\
 Je le parcours, puis à chaque ligne (position x sur le cercle), je remplis la ligne de pixel blanc jusqu'à atteindre -x sur le cercle trigonométrique.\
 J'incrémente i de 0.00001 afin d'être sûr de passer par un maximum de point sur le cercle trigo afin de remplir pour disque.
 
-# a améliorer : ajouter le tableau trigo
+
+<div align="center">
+<img width="200" src="images/README/tableau_trigo.png" title=""/>
+<br>
+<i>Tableau trigonométrique, ici, seul la fonction Sinus est illustré</i>
+</div>
+
+```c++
+for (float i = 0; i <= 4; i += 0.0001)
+{
+// à chaque point sur l'arc de cercle
+float y = (sqrt(i) / 2) * taille; // correspond à sin
+float x = (sqrt(4 - i) / 2) * taille; // correspond à cos
+```
+<div align="center">
+<i>Extrait de mon code</i>
+</div>
+
+En comparant le code avec le tableau, nous faisons immédiatement le lien entre la boucle et la valeur en rouge sur le tableau (0, 1, 2, 3, 4)
+et le calcul de y et x. `taille` indique la taille du disque, et on multiplie la taille avec le calcul afin d'espacer
+le point sur le fond noir (vu que la valeur de x et y sera plus grande).
+
 
 <br><br><br>
 
@@ -248,55 +269,67 @@ J'ai été contraint de corriger ma fonction disque : je ne gérait pas le cas o
 <i>Image originale et version modifiée</i>
 </div>
 
-# Lorem ipsum
+On trace un cercle central, puis on tourne autour grâce au cercle trigonométrique (on va de 0 à PI*2 avec un pas de PI/3).\
+À chaque itération, on redessine un même cercle, mais où le centre de ce nouveau cercle correspond au point sur le cercle central.\
+Plus le pas sera petit, plus il y aura de cercle autour du cercle central.
 
 <br><br><br>
 
 ### <a id="p15"></a> 15. Mosaïque
 <div align="center">
-<img height="200" src="images/photo.jpg" title=""/>
+<img height="200" src="images/logo.png" title=""/>
 <img height="200" src="images/README/exo15.png" title=""/>
 <br>
 <i>Image originale et version modifiée</i>
 </div>
 
-# Lorem ipsum
+J'ai créé une nouvelle image : un fond noir 5 fois plus grand que l'image importé afin qu'elle puisse rentrer
+25 fois sur le fond.\
+J'ai parcouru le fond, et à chaque fois, recopié chaque pixel du logo sur le fond.
 
 <br><br><br>
 
 ### <a id="p16"></a> 16. Mosaïque miroir
 <div align="center">
-<img height="200" src="images/photo.jpg" title=""/>
+<img height="200" src="images/logo.png" title=""/>
 <img height="200" src="images/README/exo16.png" title=""/>
 <br>
 <i>Image originale et version modifiée</i>
 </div>
 
-# Lorem ipsum
+Il suffit de reprendre le code de la version précédente de mosaïque, et quand nous sommes sur une colonne
+impaire, faire appel à la fonction de l'exercice 6 (MIRROIR). 
 
 <br><br><br>
 
 ### <a id="p17"></a> 17. Glitch
 <div align="center">
-<img height="200" src="images/photo.jpg" title=""/>
+<img height="200" src="images/logo.png" title=""/>
 <img height="200" src="images/README/exo17.png" title=""/>
 <br>
 <i>Image originale et version modifiée</i>
 </div>
 
-# Lorem ipsum
+Voici l'algorithme suivi :
+1. On choisit une position aléatoire sur l'image.
+2. On choisit une autre position aléatoire sur l'image.
+3. On choisit les dimensions d'un rectangle de manière aléatoire
+4. On parcourt une boucle imbriquée longueur largeur à l'aide du rectangle
+5. On échange chaque pixel entre les deux positions
 
 <br><br><br>
 
 ### <a id="p18"></a> 18. Tri de pixels
 <div align="center">
-<img height="200" src="images/photo.jpg" title=""/>
+<img height="200" src="images/logo.png" title=""/>
 <img height="200" src="images/README/exo18.png" title=""/>
 <br>
 <i>Image originale et version modifiée</i>
 </div>
 
-# Lorem ipsum
+Sur chaque ligne de l'image, on prend un point aléatoire et une distance aléatoire.\
+On trie sur le critère de brightness les pixels sur la distance à partir du point choisit.\
+Pour que l'effet soit plus marquant, je choisit en réalité deux points par ligne.
 
 <br><br><br>
 
@@ -308,7 +341,7 @@ J'ai été contraint de corriger ma fonction disque : je ne gérait pas le cas o
 <i>Image originale et version modifiée</i>
 </div>
 
-# Lorem ipsum
+Une fractale qui était horrible à faire.
 
 <br><br><br>
 
@@ -332,4 +365,9 @@ J'ai été contraint de corriger ma fonction disque : je ne gérait pas le cas o
 <i>Image originale et version modifiée</i>
 </div>
 
-# Lorem ipsum
+Nous voulons représenter de manière jolie notre image avec uniquement du noir et du blanc.\
+L'algorithme va jouer sur la présence du noir et du blanc pour faire paraître une nuance de gris.\
+C'était utilisé dans le cas des écrans monochrome ou quand nous étions limité en termes de palette de couleur,
+mais également pour les imprimantes à l'époque.\
+\
+J'ai repris l'algorithme présenté dans l'article de l'énoncé.
