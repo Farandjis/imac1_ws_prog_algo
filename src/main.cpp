@@ -675,6 +675,79 @@ void exo23 (sil::Image &image)
 
 }
 
+void exo24 (sil::Image &image, vector<vector<float>> matrice)
+{
+    // CONVOLUTION
+    // A noter : la matrice est le kernel
+    sil::Image nouvelleImage{image.width(), image.height()};
+    glm::vec2 centre_of_rotation = {image.width() / 2.f, image.height() / 2.f};
+
+    int nbPEBEMX = matrice.size()/2; // nbPixelEntreBordEtMilieuX
+    int nbPEBEMY = matrice[0].size()/2; // nbPixelEntreBordEtMilieuY
+    for (float x{0}; x < image.width(); ++x)
+    {
+        for (float y{0}; y < image.height(); ++y)
+        {
+            // Nous sommes sur un pixel
+            glm::vec3 moyenne = {0, 0, 0};
+
+            for (int i = 0; i < (matrice.size()); ++i)
+            {
+                for (int j = 0; j < (matrice[0].size()); ++j)
+                {
+                    // Nous sommes sur une case de la matrice
+
+                    int coordPixelSurImageX = x - nbPEBEMX + i;
+                    int coordPixelSurImageY = y - nbPEBEMY + j;
+                    // cout << coordPixelSurImageX << ", " << coordPixelSurImageY << "  ";
+                    glm::vec3 pixelAutour;
+                    if (0 <= coordPixelSurImageX && coordPixelSurImageX < image.width())
+                    {
+                        if (0 <= coordPixelSurImageY && coordPixelSurImageY < image.height())
+                            {
+                            pixelAutour = image.pixel(coordPixelSurImageX, coordPixelSurImageY);
+                            // cout << pixelAutour.r << " " << pixelAutour.g << " " << pixelAutour.b << endl;
+                            }
+                    }
+                    else
+                    {
+                        pixelAutour = {0, 0, 0};
+                    }
+
+                    moyenne.x = moyenne.x + matrice[i][j] * pixelAutour.r;
+                    moyenne.y += matrice[i][j] * pixelAutour.g;
+                    moyenne.z += matrice[i][j] * pixelAutour.b;
+
+                }
+                // cout << endl;
+            }
+            // cout << endl ;
+            nouvelleImage.pixel(x,y) = moyenne;
+            // cout << x << ", " << y << endl << endl;
+
+
+        }
+    }
+
+    image = nouvelleImage;
+}
+
+void exo24_boxBlur(sil::Image &image)
+{
+    // CONVOLUTION : BOX BLUR
+    int size = 18; // ou 10
+    float v = 1.f / (size * size);
+    vector<vector<float>> matrice(size, vector<float>(size, v));
+    exo24(image, matrice);
+}
+
+void exo24_emboss(sil::Image &image)
+{
+    int size = 18; // ou 10
+    float v = 1.f / (size * size);
+    vector<vector<float>> matrice(size, vector<float>(size, v));
+    exo24(image, matrice);
+}
 
 
 int main()
@@ -685,7 +758,7 @@ int main()
     // sil::Image image{500/*width*/, 500/*height*/};
     // TODO: modifier l'image
 
-    exo23(image);
+    exo24_boxBlur(image);
 
     image.save("output/pouet.png");
 
