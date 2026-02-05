@@ -4,6 +4,7 @@
 #include "random.hpp"
 #include <math.h>
 #include <complex>
+#include <glm/gtx/matrix_transform_2d.hpp>
 
 using namespace std;
 using namespace sil;
@@ -646,17 +647,45 @@ void exo22(sil::Image &image) {
 
 }
 
+glm::vec2 rotated(glm::vec2 point, glm::vec2 center_of_rotation, float angle)
+{
+    return glm::vec2{glm::rotate(glm::mat3{1.f}, angle) * glm::vec3{point - center_of_rotation, 0.f}} + center_of_rotation;
+}
+
+void exo23 (sil::Image &image)
+{
+    sil::Image nouvelleImage{image.width(), image.height()};
+    glm::vec2 centre_of_rotation = {image.width() / 2.f, image.height() / 2.f};
+
+
+    for (float x{0}; x < image.width(); ++x)
+    {
+        for (float y{0}; y < image.height(); ++y)
+        {
+            float angle = glm::distance(centre_of_rotation, {x, y}) / 10;
+            glm::vec2 nouvelleCoordonnees = rotated(glm::vec2{x, y}, centre_of_rotation, angle);
+            if (0 < nouvelleCoordonnees.x && nouvelleCoordonnees.x < image.width() && 0 < nouvelleCoordonnees.y && nouvelleCoordonnees.y < image.height())
+                nouvelleImage.pixel(nouvelleCoordonnees.x, nouvelleCoordonnees.y) = image.pixel(x,y);
+        }
+    }
+
+
+    image = nouvelleImage;
+
+
+}
+
+
 
 int main()
 {
-    sil::Image image{"images/photo_faible_contraste.jpg"};
-    //     sil::Image image{"images/photo.jpg"};
-    // sil::Image image{"images/logo.png"};
+    // sil::Image image{"images/photo_faible_contraste.jpg"};
+    // sil::Image image{"images/photo.jpg"};
+    sil::Image image{"images/logo.png"};
     // sil::Image image{500/*width*/, 500/*height*/};
     // TODO: modifier l'image
 
-    exo22(image);
-
+    exo23(image);
 
     image.save("output/pouet.png");
 
