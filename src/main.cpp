@@ -778,6 +778,82 @@ void exo24_sharpen(sil::Image &image)
     exo24(image, matrice);
 }
 
+void exo24_bb(sil::Image &image)
+{
+    int P = 1;
+    // https://www.f-legrand.fr/scidoc/docmml/image/filtrage/convolution/convolution.html
+    float epsilon = 0.05;
+    float sigma = P*1.0/sqrt(-2*log(epsilon));
+    int size = 3; // ou 10
+    vector<vector<float>> h(size, vector<float>(size, 0));
+    int som = 0;
+    for (int m = -P; m < P+1; m++)
+    {
+        for (int n = -P; n < P+1; n++){
+            h[m+P][n+P] = exp(-(n*n+m*m)/(2*sigma*sigma));
+            som += h[m+P][n+P];
+        }
+    }
+    for (int i = 0; i < size; i++)
+        for (int j = 0; j < size; j++)
+            h[i][j] = h[i][j]/som;
+
+    exo24(image, h);
+}
+
+void exo25(sil::Image &image)
+{
+    // CONVOLUTION : FILTES SÉPARABLES (ici : code de blox blur séparé)
+    int size = 18; // ou 10
+    float v = 1.f / (size);
+    vector<float> matrice(size, v);
+
+    sil::Image nouvelleImage{image.width(), image.height()};
+    glm::vec2 centre_of_rotation = {image.width() / 2.f, image.height() / 2.f};
+
+    int nbPEBEM = matrice.size()/2; // nbPixelEntreBordEtMilieuX
+    for (float y{0}; y < image.height(); ++y){
+        for (float x{0}; x < image.width(); ++x){
+            glm::vec3 moyenne = {0.f, 0.f, 0.f};
+            for (int i = 0; i < (matrice.size()); ++i){
+                // Nous sommes sur une case de la matrice
+                int coordPixelSurImageX = x - nbPEBEM + i;
+                glm::vec3 pixelAutour;
+                if (0 <= coordPixelSurImageX && coordPixelSurImageX < image.width())
+                    pixelAutour = image.pixel(coordPixelSurImageX, y);
+                else
+                    pixelAutour = {0, 0, 0};
+                moyenne.x = moyenne.x + matrice[i] * pixelAutour.r;
+                moyenne.y += matrice[i] * pixelAutour.g;
+                moyenne.z += matrice[i] * pixelAutour.b;
+
+            }
+            nouvelleImage.pixel(x,y) = moyenne;
+        }
+    }
+    image = nouvelleImage;
+    for (float x{0}; x < image.width(); ++x){
+        for (float y{0}; y < image.height(); ++y){
+            glm::vec3 moyenne = {0.f, 0.f, 0.f};
+            for (int i = 0; i < matrice.size(); ++i){
+                // Nous sommes sur une case de la matrice
+                int coordPixelSurImageY = y - nbPEBEM + i;
+                glm::vec3 pixelAutour;
+                if (0 <= coordPixelSurImageY && coordPixelSurImageY < image.height())
+                    pixelAutour = image.pixel(x, coordPixelSurImageY);
+                else
+                    pixelAutour = {0, 0, 0};
+                moyenne.x = moyenne.x + matrice[i] * pixelAutour.r;
+                moyenne.y += matrice[i] * pixelAutour.g;
+                moyenne.z += matrice[i] * pixelAutour.b;
+
+            }
+            nouvelleImage.pixel(x,y) = moyenne;
+        }
+    }
+    image = nouvelleImage;
+}
+
 
 int main()
 {
@@ -787,7 +863,7 @@ int main()
     // sil::Image image{500/*width*/, 500/*height*/};
     // TODO: modifier l'image
 
-    exo24_sharpen(image);
+    exo25(image);
 
     image.save("output/pouet.png");
 
