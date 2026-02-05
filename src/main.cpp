@@ -744,6 +744,7 @@ void exo24_boxBlur(sil::Image &image)
 void exo24_emboss(sil::Image &image)
 {
     // CONVOLUTION : EMBOSS
+    // article utilisé : https://en.wikipedia.org/wiki/Image_embossing
     vector<vector<float>> matrice = {
         {-1, -1, 1},
         {-1, 1, 1},
@@ -755,6 +756,7 @@ void exo24_emboss(sil::Image &image)
 void exo24_outline(sil::Image &image)
 {
     // CONVOLUTION : OUTLINE
+    // article utilsié : https://docs.gimp.org/2.6/fr/plug-in-convmatrix.html
     float contraste = 2; // saturation, plus c'est élevé, plus c'est clair
     vector<vector<float>> matrice = {
         {0, 1*contraste, 0},
@@ -764,6 +766,19 @@ void exo24_outline(sil::Image &image)
     exo24(image, matrice);
 }
 
+void exo24_sharpen(sil::Image &image)
+{
+    // CONVOLUTION : SHARPEN
+    // article utilsié : https://fr.wikipedia.org/wiki/Noyau_(traitement_d%27image) (amélioration de la netteté)
+    vector<vector<float>> matrice = {
+        {0, -1, 0},
+        {-1, 5, -1},
+        {0, -1, 0}
+    };
+    exo24(image, matrice);
+}
+
+
 int main()
 {
     // sil::Image image{"images/photo_faible_contraste.jpg"};
@@ -772,7 +787,7 @@ int main()
     // sil::Image image{500/*width*/, 500/*height*/};
     // TODO: modifier l'image
 
-    exo24_outline(image);
+    exo24_sharpen(image);
 
     image.save("output/pouet.png");
 
