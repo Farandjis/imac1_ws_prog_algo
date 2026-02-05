@@ -743,10 +743,17 @@ void exo24_boxBlur(sil::Image &image)
 
 void exo24_emboss(sil::Image &image)
 {
+    /*
     int size = 18; // ou 10
     float v = 1.f / (size * size);
     vector<vector<float>> matrice(size, vector<float>(size, v));
-    exo24(image, matrice);
+    */
+    vector<vector<float>> matrice = {
+        {-1, -1, 1},
+        {-1, 1, 1},
+        {0, 1, 0}
+    };
+    exo24(image,1 matrice);
 }
 
 
@@ -758,7 +765,7 @@ int main()
     // sil::Image image{500/*width*/, 500/*height*/};
     // TODO: modifier l'image
 
-    exo24_boxBlur(image);
+    exo24_emboss(image);
 
     image.save("output/pouet.png");
 
