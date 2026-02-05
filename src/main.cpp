@@ -563,6 +563,10 @@ void exo20_2(sil::Image &image) {
     }
 }
 
+float calculLuminance(glm::vec3 pixel)
+{
+    return (0.3*pixel.r + 0.59*pixel.g + 0.11*pixel.b);
+}
 
 void exo21(sil::Image &image) {
     // TRAMAGE
@@ -579,7 +583,7 @@ void exo21(sil::Image &image) {
 
     for (int sy = 0; sy < image.height(); sy++) {
         for (int sx = 0; sx < image.width(); sx++) {
-            float luminance = (0.3*image.pixel(sx,sy).r + 0.59*image.pixel(sx,sy).g + 0.11*image.pixel(sx,sy).b);
+            float luminance = calculLuminance(image.pixel(sx,sy));
             glm::vec3 color_result = {1, 1, 1};
             float bayer_value = bayer_matrix_4x4[sx % bayer_n][sy % bayer_n];
             float output_color = luminance + (bayer_r * bayer_value);
@@ -593,14 +597,65 @@ void exo21(sil::Image &image) {
 }
 
 
+void exo22(sil::Image &image) {
+    // NORMALISATION DE L'HISTOGRAMME
+    // utilisation de cet article pour la formule : https://helios2.mi.parisdescartes.fr/~mclement/teaching/image/tp1/sujet.pdf
+    glm::vec3 pixelLePlusClair {0, 0, 0}; // noir, car à moins que l'image soit totalement noir, il sera forcément remplacé
+    glm::vec3 pixelLePlusSombre {1, 1, 1}; // blanc de même (sauf si totalement blanc)
+
+
+    for (float x{0}; x < image.width(); ++x)
+    {
+        for (float y{0}; y < image.height(); ++y)
+        {
+
+            // si le pixel est plus clair que pixelLePlusClair
+            if (calculLuminance(image.pixel(x,y)) > calculLuminance(pixelLePlusClair))
+            {
+                pixelLePlusClair = image.pixel(x,y);
+            }
+            // si le pixel est pls sombre que pixelLePlusSombre
+            else if (calculLuminance(image.pixel(x,y)) < calculLuminance(pixelLePlusSombre))
+            {
+                pixelLePlusSombre = image.pixel(x,y);
+            }
+
+        }
+    }
+
+    // nous connaissons donc quel est le pixel le plus clair et le plus sombre
+
+    for (float x{0}; x < image.width(); ++x)
+    {
+        for (float y{0}; y < image.height(); ++y)
+        {
+            // intervalle de couleur [a, b]
+            int a = 0;
+            int b = 1;
+
+            // couleur rouge
+            image.pixel(x,y).r = a + b * ((image.pixel(x,y).r - pixelLePlusClair.r) / (pixelLePlusSombre.r - pixelLePlusClair.r));
+            image.pixel(x,y).g = a + b * ((image.pixel(x,y).g - pixelLePlusClair.g) / (pixelLePlusSombre.g - pixelLePlusClair.g));
+            image.pixel(x,y).b = a + b * ((image.pixel(x,y).b - pixelLePlusClair.b) / (pixelLePlusSombre.b - pixelLePlusClair.b));
+        }
+    }
+
+    // Problème : nous obtenons une image en négatif, donc on la passe dans notre superbe fonction "NÉGATIF"
+    // afin de prendre le négatif du négatif (et donc le résultat attendu).
+    exo4(image);
+
+}
+
+
 int main()
 {
-    sil::Image image{"images/photo.jpg"};
+    sil::Image image{"images/photo_faible_contraste.jpg"};
+    //     sil::Image image{"images/photo.jpg"};
     // sil::Image image{"images/logo.png"};
     // sil::Image image{500/*width*/, 500/*height*/};
     // TODO: modifier l'image
 
-    exo21(image);
+    exo22(image);
 
 
     image.save("output/pouet.png");

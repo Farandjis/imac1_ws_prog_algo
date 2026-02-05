@@ -41,6 +41,15 @@ lesquels il ne faut pas tomber
   - **[10.2 Assombrissement](#p10-2)**
 - **[11. Disque](#p11)**
 - **[12. Cercle](#p12)**
+- **[13. Animation](#p13)**
+- **[14. Rosace](#p14)**
+- **[15. Mosaïque](#p15)**
+- **[16. Mosaïque miroir](#p16)**
+- **[17. Glitch](#p17)**
+- **[18. Tri de pixels](#p18)**
+- **[19. Fractal de Mandelbrot](#p19)**
+- **[20. Dégradés dans l'espace de couleur OKLAB](#p20)**
+- **[21. Tramage](#p21)**
 
 ---
 
@@ -115,8 +124,7 @@ On donne la même nuance de gris à toute la colonne, et on change automatiqueme
 <i>Image originale et version modifiée</i>
 </div>
 
-# Lorem ipsum
-
+Le pixel tout à gauche devient le pixel tout à droite et ainsi de suite.
 <br><br><br>
 
 ### <a id="p7"></a> 7. Image bruitée
@@ -163,16 +171,6 @@ Il suffit juste de créé une nouvelle image (noir) et de placer de manière dé
 <br><br><br>
 
 ### <a id="p10"></a> 10. Luminosité
-<div align="center">
-<img height="200" src="images/logo.png" title=""/>
-<img height="200" src="images/README/exo10.png" title=""/>
-<br>
-<i>Image originale et version modifiée</i>
-</div>
-
-# Lorem ipsum à voir avec le professeur si c'est légal
-
-<br><br>
 
 #### <a id="p10-1"></a> 10.1 Éclaircissement
 <div align="center">
@@ -182,7 +180,7 @@ Il suffit juste de créé une nouvelle image (noir) et de placer de manière dé
 <i>Image originale et version modifiée</i>
 </div>
 
-Lorem ipsum
+On décrémente la valeur de chaque canal de couleur.
 
 <br><br>
 
@@ -194,7 +192,7 @@ Lorem ipsum
 <i>Image originale et version modifiée</i>
 </div>
 
-Lorem ipsum
+On incrémente la valeur de chaque canal de couleur.
 
 <br><br><br>
 
@@ -206,7 +204,12 @@ Lorem ipsum
 <i>Image originale et version modifiée</i>
 </div>
 
-# Lorem ipsum à voir avec le professeur si c'est légal
+Je n'ai pas tenu compte de la note concernant la formule pour détecter si un point fait partie du disque ou non.\
+A la place, je me suis aidé du cercle trigonométrique et du tableau.\
+Je le parcours, puis à chaque ligne (position x sur le cercle), je remplis la ligne de pixel blanc jusqu'à atteindre -x sur le cercle trigonométrique.\
+J'incrémente i de 0.00001 afin d'être sûr de passer par un maximum de point sur le cercle trigo afin de remplir pour disque.
+
+# a améliorer : ajouter le tableau trigo
 
 <br><br><br>
 
@@ -218,6 +221,115 @@ Lorem ipsum
 <i>Image originale et version modifiée</i>
 </div>
 
-# Lorem ipsum à voir avec le professeur si c'est légal
+Je réutilise le cercle trigonométrique mais en utilisant les fonctions sin() et cos().\
+Pour l'épaisseur, je trace autant de cercle côte à côte que nécessaire (donc 10 si l'épaisseur est de 10).
 
 <br><br><br>
+
+### <a id="p13"></a> 13. Animation
+<div align="center">
+<img height="200" src="images/README/noir.png" title=""/>
+<img height="200" src="images/README/exo13.gif" title=""/>
+<br>
+<i>Image originale et version modifiée</i>
+</div>
+
+J'ai fais une boucle où je dessine un disque en changeant la position du centre, puis en raffraichissant le fond noir.\
+J'enregistre ensuite toutes les images générés et j'ai utilisé un site pour en faire un gif.
+J'ai été contraint de corriger ma fonction disque : je ne gérait pas le cas où mon disque débordait la zone de dessin. De ce fait, le programme plantait, car les coordonnées étaient inatteignable.
+
+<br><br><br>
+
+### <a id="p14"></a> 14. Rosace
+<div align="center">
+<img height="200" src="images/README/noir.png" title=""/>
+<img height="200" src="images/README/exo14.png" title=""/>
+<br>
+<i>Image originale et version modifiée</i>
+</div>
+
+# Lorem ipsum
+
+<br><br><br>
+
+### <a id="p15"></a> 15. Mosaïque
+<div align="center">
+<img height="200" src="images/photo.jpg" title=""/>
+<img height="200" src="images/README/exo15.png" title=""/>
+<br>
+<i>Image originale et version modifiée</i>
+</div>
+
+# Lorem ipsum
+
+<br><br><br>
+
+### <a id="p16"></a> 16. Mosaïque miroir
+<div align="center">
+<img height="200" src="images/photo.jpg" title=""/>
+<img height="200" src="images/README/exo16.png" title=""/>
+<br>
+<i>Image originale et version modifiée</i>
+</div>
+
+# Lorem ipsum
+
+<br><br><br>
+
+### <a id="p17"></a> 17. Glitch
+<div align="center">
+<img height="200" src="images/photo.jpg" title=""/>
+<img height="200" src="images/README/exo17.png" title=""/>
+<br>
+<i>Image originale et version modifiée</i>
+</div>
+
+# Lorem ipsum
+
+<br><br><br>
+
+### <a id="p18"></a> 18. Tri de pixels
+<div align="center">
+<img height="200" src="images/photo.jpg" title=""/>
+<img height="200" src="images/README/exo18.png" title=""/>
+<br>
+<i>Image originale et version modifiée</i>
+</div>
+
+# Lorem ipsum
+
+<br><br><br>
+
+### <a id="p19"></a> 19. Fractal de Mandelbrot
+<div align="center">
+<img height="200" src="images/README/noir.png" title=""/>
+<img height="200" src="images/README/exo19.png" title=""/>
+<br>
+<i>Image originale et version modifiée</i>
+</div>
+
+# Lorem ipsum
+
+<br><br><br>
+
+### <a id="p20"></a> 20. Dégradés dans l'espace de couleur OKLAB
+<div align="center">
+<img height="200" src="images/README/exo20_1.png" title=""/>
+<img height="200" src="images/README/exo20_2.png" title=""/>
+<br>
+<i>Image originale et version modifiée</i>
+</div>
+
+# Lorem ipsum
+
+<br><br><br>
+
+### <a id="p21"></a> 21. Tramage
+<div align="center">
+<img height="200" src="images/photo.jpg" title=""/>
+<img height="200" src="images/README/exo21.png" title=""/>
+<br>
+<i>Image originale et version modifiée</i>
+</div>
+
+# Lorem ipsum
