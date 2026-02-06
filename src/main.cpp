@@ -557,7 +557,10 @@ void exo20_2(sil::Image &image) {
             preparationDuVert = linear_vers_oklab(image.pixel(x,y).r, preparationDuVert[1], image.pixel(x, y).b);
             image.pixel(x, y) = glm::mix(preparationDuRouge, preparationDuVert , x/image.width());
 
-                    }
+            image.pixel(x, y) = oklab_vers_linear(image.pixel(x,y).r, image.pixel(x,y).g, image.pixel(x,y).b);
+            image.pixel(x, y) = linear_vers_sRGB(image.pixel(x,y).r, image.pixel(x,y).g, image.pixel(x,y).b);
+
+        }
     }
 }
 
@@ -857,12 +860,136 @@ void exo26(sil::Image &image)
 int main()
 {
     // sil::Image image{"images/photo_faible_contraste.jpg"};
-    sil::Image image{"images/photo.jpg"};
+    // sil::Image image{"images/photo.jpg"};
     // sil::Image image{"images/logo.png"};
     // sil::Image image{500/*width*/, 500/*height*/};
-    // TODO: modifier l'image
 
-    exo20_2(image);
+
+    // Décommenter seulement ce que vous voulez utiliser
+
+    // =============================================================
+    // APPELS DES EXERCICES (décommenter UN seul exo à la fois)
+    // =============================================================
+
+    // EXO 1 — NE GARDER QUE LE VERT
+    // image = Image("images/logo.png");
+    // exo1(image);
+
+    // EXO 2 — ÉCHANGER LES CANAUX
+    // image = Image("images/logo.png");
+    // exo2(image);
+
+    // EXO 3 — NOIR & BLANC
+    // image = Image("images/logo.png");
+    // exo3(image);
+
+    // EXO 4 — NÉGATIF
+    // image = Image("images/logo.png");
+    // exo4(image);
+
+    // EXO 5 — DÉGRADÉ (image générée)
+    // image = Image{500, 500};
+    // exo5(image);
+
+    // EXO 6 — MIROIR
+    // image = Image("images/logo.png");
+    // exo6(image);
+
+    // EXO 7 — IMAGE BRUITÉE
+    // image = Image("images/logo.png");
+    // exo7(image);
+
+    // EXO 8 — ROTATION À 90°
+    // image = Image("images/logo.png");
+    // exo8(image);
+
+    // EXO 9 — RGB SPLIT
+    // image = Image("images/logo.png");
+    // exo9(image);
+
+    // EXO 10.1 — LUMINOSITÉ : ÉCLAIRCISSEMENT
+    // image = Image("images/photo.jpg");
+    // exo10_eclaircissement(image);
+
+    // EXO 10.2 — LUMINOSITÉ : ASSOMBRISSEMENT
+    // image = Image("images/photo.jpg");
+    // exo10_assombrissement(image);
+
+    // EXO 11 — DISQUE (image générée sur fond noir)
+    // image = Image{500, 500};
+    // exo11(image);
+
+    // EXO 12 — CERCLE
+    // image = Image("images/README/noir.png");
+    // exo12(image);
+
+    // EXO 13 — ANIMATION
+    // image = Image("images/README/noir.png");
+    // exo13(image);
+
+    // EXO 14 — ROSACE
+    // image = Image("images/README/noir.png");
+    // exo14(image);
+
+    // EXO 15 — MOSAÏQUE
+    // image = Image("images/logo.png");
+    // exo15(image);
+
+    // EXO 16 — MOSAÏQUE MIROIR
+    // image = Image("images/logo.png");
+    // exo16(image);
+
+    // EXO 17 — GLITCH
+    // image = Image("images/logo.png");
+    // exo17(image);
+
+    // EXO 18 — TRI DE PIXELS
+    // image = Image("images/logo.png");
+    // exo18(image);
+
+    // EXO 19 — FRACTALE DE MANDELBROT (image générée)
+    // image = Image{500, 500};
+    // exo19(image);
+
+    // EXO 20 1 — DÉGRADÉS
+    // image = Image{500, 500};
+    // exo20_1(image);
+
+    // EXO 20 1 — DÉGRADÉS OKLAB (image générée)
+    // image = Image{500, 500};
+    // exo20_2(image);
+
+    // EXO 21 — TRAMAGE
+    // image = Image("images/photo.jpg");
+    // exo21(image);
+
+    // EXO 22 — NORMALISATION DE L’HISTOGRAMME
+    // image = Image("images/photo.jpg");
+    // exo22(image);
+
+    // EXO 23 — DISTORSION RADIALE
+    // image = Image("images/logo.png");
+    // exo23(image);
+
+    // EXO 24 — CONVOLUTION
+    // image = Image("images/logo.png");
+    // exo24_boxBlur(image);
+    // image = Image("images/logo.png");
+    // exo24_emboss(image);
+    // image = Image("images/logo.png");
+    // exo24_outline(image);
+    // image = Image("images/logo.png");
+    // exo24_sharpen(image);
+
+    // EXO 25 — FILTRES SÉPARABLES
+    // image = Image("images/logo.png");
+    // exo25(image,100);
+
+    // EXO 26 — DÉTECTION DE CONTOURS
+    // image = Image("images/photo.jpg");
+    // exo26(image);
+
+
 
     image.save("output/pouet.png");
 

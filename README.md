@@ -13,11 +13,14 @@ Pour le rapport, faites une section par exercice que vous avez fait. Montrez une
 et après application de l'effet (comme c'est fait dans l'énoncé des exercices). Le rapport n'a
 pas besoin d'être long. Pour les exercices où vous jugez cela utile, mettez un petit texte
 expliquant des spécificités de l'algo que vous avez implémenté, et les pièges potentiels dans
-lesquels il ne faut pas tomber
+lesquels il ne faut pas tomber.
 <br><br><br>
 
 </div>
 
+Chaque exercice est une fonction commençant par "exo" dans main.cpp.\
+Il suffit de décommenter (enlever les //) la ligne de la fonction et de son image associée pour l'exécuter.\
+Assurez-vous que les autres exercices soient toujours commentés (sinon, cela prendrait du temps de calcul en plus inutile ou influerait sur le résultat de l'exercice souhaité).
 
 <br><br>
 
@@ -139,10 +142,10 @@ Le pixel tout à gauche devient le pixel tout à droite et ainsi de suite.
 <i>Image originale et version modifiée</i>
 </div>
 
-Lorsque nous parcourons l'image, nous avons 25% de chance que le pixel soit modifié (bruité).\
-Lorsqu'il est décidé que ce pixel est bruité, on récupère une valeur aléatoire que nous donnons aux teintes rouges, vertes et bleues.\
+Lorsque nous parcourons l'image, nous avons 25 % de chance que le pixel soit modifié (bruité).\
+Lorsqu'il est décidé que ce pixel est bruité, on récupère une valeur aléatoire que nous donnons aux teintes rouge, vert et bleu.\
 \
-Nous utilisons un seed afin qu'à chaque lancement du programme, nous obtenons la même suite aléatoire et donc le même résultat que sur l'image juste au dessus (version modifiée).
+Nous utilisons un seed afin qu'à chaque lancement du programme, nous obtenions la même suite aléatoire et donc le même résultat que sur l'image juste au-dessus (version modifiée).
 
 <br><br><br>
 
@@ -154,8 +157,8 @@ Nous utilisons un seed afin qu'à chaque lancement du programme, nous obtenons l
 <i>Image originale et version modifiée</i>
 </div>
 
-On créer un fond noir avec la largeur et la longueur de l'image, mais retourné.\
-Cela signifie donc que x sur l'image équivaut à y pour le fond. (la valeur x devient la valeur y).\
+On crée un fond noir avec la largeur et la longueur de l'image, mais retourné.\
+Cela signifie donc que x sur l'image équivaut à y pour le fond (la valeur x devient la valeur y).\
 Pour renverser l'image, y sur l'image doit devenir x sur le fond mais sous la forme `x = image.width() - y - 1`.
 
 <br><br><br>
@@ -169,10 +172,10 @@ Pour renverser l'image, y sur l'image doit devenir x sur le fond mais sous la fo
 </div>
 
 Pour illustrer : nous sommes sur un logiciel graphique comme Paint.NET.\
-Chaque couleur est un calque. On décide de décaler le calque bleu à 30 pixels sur la gauche, le calque rouge à 30 pixels sur la droite.\
-En faisant cela, nous obtenons la version modifiée affiché dans ce rapport.\
+Chaque couleur est un calque. On décide de décaler le calque bleu de 30 pixels sur la gauche, le calque rouge de 30 pixels sur la droite.\
+En faisant cela, nous obtenons la version modifiée affichée dans ce rapport.\
 \
-Il suffit juste de créé une nouvelle image (noir) et de placer de manière décalé, comme il est décrit, le pixel que nous avons récupéré sur l'image d'origine.
+Il suffit juste de créer une nouvelle image (noir) et de placer, de manière décalée comme décrit, le pixel récupéré sur l'image d'origine.
 
 <br><br><br>
 
@@ -211,15 +214,14 @@ On incrémente la valeur de chaque canal de couleur.
 </div>
 
 Je n'ai pas tenu compte de la note concernant la formule pour détecter si un point fait partie du disque ou non.\
-A la place, je me suis aidé du cercle trigonométrique et du tableau.\
-Je le parcours, puis à chaque ligne (position x sur le cercle), je remplis la ligne de pixel blanc jusqu'à atteindre -x sur le cercle trigonométrique.\
-J'incrémente i de 0.00001 afin d'être sûr de passer par un maximum de point sur le cercle trigo afin de remplir pour disque.
-
+À la place, je me suis aidé du cercle trigonométrique et du tableau.\
+Je le parcours, puis à chaque ligne (position x sur le cercle), je remplis la ligne de pixels blancs jusqu'à atteindre -x sur le cercle trigonométrique.\
+J'incrémente i de 0.00001 afin d'être sûr de passer par un maximum de points sur le cercle trigo pour remplir le disque.
 
 <div align="center">
 <img width="200" src="images/README/tableau_trigo.png" title=""/>
 <br>
-<i>Tableau trigonométrique, ici, seul la fonction Sinus est illustré</i>
+<i>Tableau trigonométrique, ici seule la fonction Sinus est illustrée</i>
 </div>
 
 ```c++
@@ -235,8 +237,7 @@ float x = (sqrt(4 - i) / 2) * taille; // correspond à cos
 
 En comparant le code avec le tableau, nous faisons immédiatement le lien entre la boucle et la valeur en rouge sur le tableau (0, 1, 2, 3, 4)
 et le calcul de y et x. `taille` indique la taille du disque, et on multiplie la taille avec le calcul afin d'espacer
-le point sur le fond noir (vu que la valeur de x et y sera plus grande).
-
+les points sur le fond noir (vu que la valeur de x et y sera plus grande).
 
 <br><br><br>
 
@@ -249,7 +250,7 @@ le point sur le fond noir (vu que la valeur de x et y sera plus grande).
 </div>
 
 Je réutilise le cercle trigonométrique mais en utilisant les fonctions sin() et cos().\
-Pour l'épaisseur, je trace autant de cercle côte à côte que nécessaire (donc 10 si l'épaisseur est de 10).
+Pour l'épaisseur, je trace autant de cercles côte à côte que nécessaire (donc 10 si l'épaisseur est de 10).
 
 <br><br><br>
 
@@ -261,9 +262,9 @@ Pour l'épaisseur, je trace autant de cercle côte à côte que nécessaire (don
 <i>Image originale et version modifiée</i>
 </div>
 
-J'ai fais une boucle où je dessine un disque en changeant la position du centre, puis en raffraichissant le fond noir.\
-J'enregistre ensuite toutes les images générés et j'ai utilisé un site pour en faire un gif.
-J'ai été contraint de corriger ma fonction disque : je ne gérait pas le cas où mon disque débordait la zone de dessin. De ce fait, le programme plantait, car les coordonnées étaient inatteignable.
+J'ai fait une boucle où je dessine un disque en changeant la position du centre, puis en rafraîchissant le fond noir.\
+J'enregistre ensuite toutes les images générées et j'ai utilisé un site pour en faire un GIF.\
+J'ai été contraint de corriger ma fonction disque : je ne gérais pas le cas où mon disque débordait de la zone de dessin. De ce fait, le programme plantait, car les coordonnées étaient inatteignables.
 
 <br><br><br>
 
@@ -276,8 +277,8 @@ J'ai été contraint de corriger ma fonction disque : je ne gérait pas le cas o
 </div>
 
 On trace un cercle central, puis on tourne autour grâce au cercle trigonométrique (on va de 0 à PI*2 avec un pas de PI/3).\
-À chaque itération, on redessine un même cercle, mais où le centre de ce nouveau cercle correspond au point sur le cercle central.\
-Plus le pas sera petit, plus il y aura de cercle autour du cercle central.
+À chaque itération, on redessine le même cercle, mais où le centre de ce nouveau cercle correspond au point sur le cercle central.\
+Plus le pas sera petit, plus il y aura de cercles autour du cercle central.
 
 <br><br><br>
 
@@ -289,7 +290,7 @@ Plus le pas sera petit, plus il y aura de cercle autour du cercle central.
 <i>Image originale et version modifiée</i>
 </div>
 
-J'ai créé une nouvelle image : un fond noir 5 fois plus grand que l'image importé afin qu'elle puisse rentrer
+J'ai créé une nouvelle image : un fond noir 5 fois plus grand que l'image importée afin qu'elle puisse rentrer
 25 fois sur le fond.\
 J'ai parcouru le fond, et à chaque fois, recopié chaque pixel du logo sur le fond.
 
@@ -304,7 +305,7 @@ J'ai parcouru le fond, et à chaque fois, recopié chaque pixel du logo sur le f
 </div>
 
 Il suffit de reprendre le code de la version précédente de mosaïque, et quand nous sommes sur une colonne
-impaire, faire appel à la fonction de l'exercice 6 (MIRROIR). 
+impaire, faire appel à la fonction de l'exercice 6 (Miroir). 
 
 <br><br><br>
 
@@ -319,9 +320,9 @@ impaire, faire appel à la fonction de l'exercice 6 (MIRROIR).
 Voici l'algorithme suivi :
 1. On choisit une position aléatoire sur l'image.
 2. On choisit une autre position aléatoire sur l'image.
-3. On choisit les dimensions d'un rectangle de manière aléatoire
-4. On parcourt une boucle imbriquée longueur largeur à l'aide du rectangle
-5. On échange chaque pixel entre les deux positions
+3. On choisit les dimensions d'un rectangle de manière aléatoire.
+4. On parcourt une boucle imbriquée longueur x largeur à l'aide du rectangle.
+5. On échange chaque pixel entre les deux positions.
 
 <br><br><br>
 
@@ -334,8 +335,8 @@ Voici l'algorithme suivi :
 </div>
 
 Sur chaque ligne de l'image, on prend un point aléatoire et une distance aléatoire.\
-On trie sur le critère de brightness les pixels sur la distance à partir du point choisit.\
-Pour que l'effet soit plus marquant, je choisit en réalité deux points par ligne.
+On trie sur le critère de brightness les pixels sur la distance à partir du point choisi.\
+Pour que l'effet soit plus marquant, je choisis en réalité deux points par ligne.
 
 <br><br><br>
 
@@ -360,11 +361,11 @@ Une fractale qui était horrible à faire.
 </div>
 
 Notre dégradé de couleur (image originale) est représenté au format sRGB lorsque nous visualisons l'image.\
-De ce fait, les couleurs ne sont pas très belle. Notre objectif est donc de la mettre dans le format de couleur OKLAB, bien plus jolie.\
-Seulement, nous devons la remettre au format sRGB à la fin, afin qu'elle soit correctement interprété.
-Je me suis aidé des articles partagés dans l'énnoncé.\
+De ce fait, les couleurs ne sont pas très belles. Notre objectif est donc de la mettre dans le format de couleur OKLAB, bien plus joli.\
+Seulement, nous devons la remettre au format sRGB à la fin, afin qu'elle soit correctement interprétée.
+Je me suis aidé des articles partagés dans l'énoncé.\
 \
-Voici les étape à suivre :
+Voici les étapes à suivre :
 1. Conversion sRGB -> Linear RGB
 2. Conversion Linear RGB -> OKLAB
 3. On fait un mix des couleurs rouge et vert en fonction de x
@@ -372,14 +373,13 @@ Voici les étape à suivre :
 5. Conversion Linear RGB -> sRGB
 
 <div align="center">
-<img height="200" src="images/README/exo20_ pre1.png" title=""/>
+<img height="200" src="images/README/exo20_pre1.png" title=""/>
 <br>
 <i>Rendu après l'étape 2</i><br>
-<img height="200" src="images/README/exo20 pre2.png" title=""/>
+<img height="200" src="images/README/exo20_pre2.png" title=""/>
 <br>
 <i>Rendu après l'étape 3</i>
 </div>
-
 
 <br><br><br>
 
@@ -393,12 +393,12 @@ Voici les étape à suivre :
 
 Nous voulons représenter de manière jolie notre image avec uniquement du noir et du blanc.\
 L'algorithme va jouer sur la présence du noir et du blanc pour faire paraître une nuance de gris.\
-C'était utilisé dans le cas des écrans monochrome ou quand nous étions limité en termes de palette de couleur,
+C'était utilisé dans le cas des écrans monochromes ou quand nous étions limités en termes de palette de couleurs,
 mais également pour les imprimantes à l'époque.\
 \
 J'ai repris l'algorithme présenté dans l'article de l'énoncé.
 
-### <a id="p22"></a> 22. NORMALISATION DE L’HISTOGRAMME
+### <a id="p22"></a> 22. Normalisation de l’histogramme
 <div align="center">
 <img height="200" src="images/photo.jpg" title=""/>
 <img height="200" src="images/README/exo22.png" title=""/>
@@ -412,9 +412,7 @@ Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
 
 <br><br><br>
 
----
-
-### <a id="p23"></a> 23. DISTORSION RADIALE
+### <a id="p23"></a> 23. Distorsion radiale
 <div align="center">
 <img height="200" src="images/logo.png" title=""/>
 <img height="200" src="images/README/exo23.png" title=""/>
@@ -428,11 +426,9 @@ Sed nisi. Nulla quis sem at nibh elementum imperdiet.
 
 <br><br><br>
 
----
+### <a id="p24"></a> 24. Convolution
 
-### <a id="p24"></a> 24. CONVOLUTION
-
-L'objectif est de créé un algorithme qui prend en entrée une matrice qui, en fonction de ses valeurs,
+L'objectif est de créer un algorithme qui prend en entrée une matrice qui, en fonction de ses valeurs,
 provoque des effets particuliers sur l'image.
 
 <br><br>
@@ -440,7 +436,7 @@ provoque des effets particuliers sur l'image.
 #### Box Blur
 <div align="center">
 <img height="200" src="images/logo.png" title=""/>
-<img height="200" src="images/README/exo24 10x10.png" title=""/>
+<img height="200" src="images/README/exo24_10x10.png" title=""/>
 <br>
 <i>Image originale et version modifiée</i>
 </div>
@@ -456,8 +452,10 @@ On rend flou l'image (ici, un flou léger, la matrice fait du 10x10, donc le pix
 <br>
 <i>Image originale et version modifiée</i>
 </div>
-Un sorte de mini effet 3D si on pourrait dire (on dirait que le logo ressort, comme s'il y avait de l'ombre, comme
+
+Un sorte de mini effet 3D si on peut dire (on dirait que le logo ressort, comme s'il y avait de l'ombre, comme
 si le logo était sur une bosse). Utilisation de https://en.wikipedia.org/wiki/Image_embossing pour récupérer la matrice. 
+
 <br><br>
 
 #### Outline
@@ -479,33 +477,37 @@ On souhaite conserver uniquement les contours, utilisation de https://docs.gimp.
 <br>
 <i>Image originale et version modifiée</i>
 </div>
-On souhaite améliorer la netteté de l'image, utilisation de https://fr.wikipedia.org/wiki/Noyau_(traitement_d%27image 
+
+On souhaite améliorer la netteté de l'image, utilisation de https://fr.wikipedia.org/wiki/Noyau_(traitement_d%27image)
 
 <br><br><br>
 
----
-
-### <a id="p25"></a> 25. FILTRES SÉPARABLES
+### <a id="p25"></a> 25. Filtres séparables
 <div align="center">
 <img height="500" src="images/README/exo25a.png" title=""/><br>
 <img height="500" src="images/README/exo25b.png" title=""/>
 <br>
-<i>Image originale et version modifiée</i>
+<i>Comparaison (voir explications)</i>
 </div>
 
 Plutôt que de parcourir la matrice entièrement pour chaque pixel de l'image,
-on analyse dans un premier temps l'image à l'horizontal puis à la verticale.
-On fait le mélange uniquement sur les pixels horizontaux quand on parcours à l'horizontal
-(et donc verticaux quand on parcourt à la vertical).\
+on analyse dans un premier temps l'image à l'horizontal puis à la verticale.\
+On fait le mélange uniquement sur les pixels horizontaux quand on parcourt à l'horizontal
+(et donc verticaux quand on parcourt à la verticale).\
 On remarque que la première méthode prend beaucoup plus de temps que la méthode 2.\
 \
-Remarque : le temps varie en fonction de l'intensité du flou et de la configuration matérielle, je n'estime pas
-nécessaire d'indiquer l'intensité choisit (mais elle était élevé, 300 peut être ?).
+Remarque : le temps varie en fonction de l'intensité du flou et de la configuration matérielle.\
+\
+**Voici les informations lors de l'exécution de ce test :**\
+Intensité indiquée : 300\
+Configuration Matérielle :
+- Processeur : AMD Ryzen 5 7535HS
+- Mémoire RAM : 16Go
+- OS : Ubuntu 24.04.3 64bits (Linux 6.14.0-37-generic)
+- Modèle PC : Acer Nitro ANV15-41
 <br><br><br>
 
----
-
-### <a id="p26"></a> 26. DÉTECTION DE CONTOURS
+### <a id="p26"></a> 26. Détection de contours
 <div align="center">
 <img height="200" src="images/photo.jpg" title=""/>
 <img height="200" src="images/README/exo26.png" title=""/>
@@ -513,6 +515,6 @@ nécessaire d'indiquer l'intensité choisit (mais elle était élevé, 300 peut 
 <i>Image originale et version modifiée</i>
 </div>
 
-J'ai fais une détection des contours mais malheureusement, ça ne correspond pas à l'image de l'énnoncé
+J'ai fait une détection des contours mais malheureusement, ça ne correspond pas à l'image de l'énoncé.
 
 <br><br><br>
