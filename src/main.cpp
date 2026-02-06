@@ -555,12 +555,9 @@ void exo20_2(sil::Image &image) {
             glm::vec3 preparationDuVert = {0, 1, 0};
             preparationDuVert = sRGB_vers_Linear(image.pixel(x, y).r, preparationDuVert[1] , image.pixel(x, y).b);
             preparationDuVert = linear_vers_oklab(image.pixel(x,y).r, preparationDuVert[1], image.pixel(x, y).b);
-
             image.pixel(x, y) = glm::mix(preparationDuRouge, preparationDuVert , x/image.width());
 
-            image.pixel(x, y) = oklab_vers_linear(image.pixel(x,y).r, image.pixel(x,y).g, image.pixel(x,y).b);
-            image.pixel(x, y) = linear_vers_sRGB(image.pixel(x,y).r, image.pixel(x,y).g, image.pixel(x,y).b);
-        }
+                    }
     }
 }
 
@@ -837,28 +834,20 @@ void exo26(sil::Image &image)
     exo3(image);
     Image imageFlou = image;
     Image imageTresFlou = image;
-    exo25(imageFlou, 1);
-    exo25(imageTresFlou, 200);
+    exo25(imageFlou, 8);
+    exo25(imageTresFlou, 4);
 
     for (int x = 0; x < image.width(); ++x)
         for (int y = 0; y < image.height(); ++y)
         {
-            float dog = imageFlou.pixel(x,y).r - imageTresFlou.pixel(x,y).r;
-            dog = 0.5f + dog * 2.0f; // facteur à ajuster
+            float diff = imageFlou.pixel(x,y).r - imageTresFlou.pixel(x,y).r;
 
-            imageFlou.pixel(x,y) = {dog, dog, dog};
-
-            /*
-            imageFlou.pixel(x,y).r -= imageTresFlou.pixel(x,y).r;
-            imageFlou.pixel(x,y).g -= imageTresFlou.pixel(x,y).g;
-            imageFlou.pixel(x,y).b -= imageTresFlou.pixel(x,y).b;
-
-            */
             // cout << calculLuminance(imageFlou.pixel(x,y))*10 << endl;
-            if (dog < 0.0f)
-                imageFlou.pixel(x,y) = {1, 1, 1};
-            else
+            if (diff > 0.015f)
+
                 imageFlou.pixel(x,y) = {0, 0, 0};
+            else
+                imageFlou.pixel(x,y) = {1, 1, 1};
 
         }
 
@@ -873,7 +862,7 @@ int main()
     // sil::Image image{500/*width*/, 500/*height*/};
     // TODO: modifier l'image
 
-    exo21(image);
+    exo20_2(image);
 
     image.save("output/pouet.png");
 

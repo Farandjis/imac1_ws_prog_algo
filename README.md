@@ -50,7 +50,11 @@ lesquels il ne faut pas tomber
 - **[19. Fractal de Mandelbrot](#p19)**
 - **[20. Dégradés dans l'espace de couleur OKLAB](#p20)**
 - **[21. Tramage](#p21)**
-
+- **[22. Normalisation de l'histogramme](#p22)**
+- **[23. Distorsion radiale](#p23)**
+- **[24. Convolution](#p24)**
+- **[25. Filtres séparables](#p25)**
+- **[26. Détection de contours](#p26)**
 ---
 
 ### <a id="p1"></a> 1. Ne garder que le vert
@@ -150,7 +154,9 @@ Nous utilisons un seed afin qu'à chaque lancement du programme, nous obtenons l
 <i>Image originale et version modifiée</i>
 </div>
 
-# Lorem ipsum
+On créer un fond noir avec la largeur et la longueur de l'image, mais retourné.\
+Cela signifie donc que x sur l'image équivaut à y pour le fond. (la valeur x devient la valeur y).\
+Pour renverser l'image, y sur l'image doit devenir x sur le fond mais sous la forme `x = image.width() - y - 1`.
 
 <br><br><br>
 
@@ -350,10 +356,30 @@ Une fractale qui était horrible à faire.
 <img height="200" src="images/README/exo20_1.png" title=""/>
 <img height="200" src="images/README/exo20_2.png" title=""/>
 <br>
-<i>Image originale et version modifiée</i>
+<i>Image originale et version finale</i>
 </div>
 
-# Lorem ipsum
+Notre dégradé de couleur (image originale) est représenté au format sRGB lorsque nous visualisons l'image.\
+De ce fait, les couleurs ne sont pas très belle. Notre objectif est donc de la mettre dans le format de couleur OKLAB, bien plus jolie.\
+Seulement, nous devons la remettre au format sRGB à la fin, afin qu'elle soit correctement interprété.
+Je me suis aidé des articles partagés dans l'énnoncé.\
+\
+Voici les étape à suivre :
+1. Conversion sRGB -> Linear RGB
+2. Conversion Linear RGB -> OKLAB
+3. On fait un mix des couleurs rouge et vert en fonction de x
+4. Conversion OKLAB -> Linear RGB
+5. Conversion Linear RGB -> sRGB
+
+<div align="center">
+<img height="200" src="images/README/exo20_ pre1.png" title=""/>
+<br>
+<i>Rendu après l'étape 2</i><br>
+<img height="200" src="images/README/exo20 pre2.png" title=""/>
+<br>
+<i>Rendu après l'étape 3</i>
+</div>
+
 
 <br><br><br>
 
@@ -371,3 +397,118 @@ C'était utilisé dans le cas des écrans monochrome ou quand nous étions limit
 mais également pour les imprimantes à l'époque.\
 \
 J'ai repris l'algorithme présenté dans l'article de l'énoncé.
+
+### <a id="p22"></a> 22. NORMALISATION DE L’HISTOGRAMME
+<div align="center">
+<img height="200" src="images/photo.jpg" title=""/>
+<img height="200" src="images/README/exo22.png" title=""/>
+<br>
+<i>Image originale et version modifiée</i>
+</div>
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.  
+Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  
+Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+
+<br><br><br>
+
+---
+
+### <a id="p23"></a> 23. DISTORSION RADIALE
+<div align="center">
+<img height="200" src="images/logo.png" title=""/>
+<img height="200" src="images/README/exo23.png" title=""/>
+<br>
+<i>Image originale et version modifiée</i>
+</div>
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.  
+Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.  
+Sed nisi. Nulla quis sem at nibh elementum imperdiet.
+
+<br><br><br>
+
+---
+
+### <a id="p24"></a> 24. CONVOLUTION
+
+
+<br><br>
+
+#### Box Blur
+<div align="center">
+<img height="200" src="images/logo.png" title=""/>
+<img height="200" src="images/README/exo24 10x10.png" title=""/>
+<br>
+<i>Image originale et version modifiée</i>
+</div>
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.  
+Duis sagittis ipsum. Praesent mauris.  
+Fusce nec tellus sed augue semper porta.
+
+<br><br>
+
+#### Emboss
+<div align="center">
+<img height="200" src="images/logo.png" title=""/>
+<img height="200" src="images/README/exo24e.png" title=""/>
+<br>
+<i>Image originale et version modifiée</i>
+</div>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+<br><br>
+
+#### Outline
+<div align="center">
+<img height="200" src="images/logo.png" title=""/>
+<img height="200" src="images/README/exo24o.png" title=""/>
+<br>
+<i>Image originale et version modifiée</i>
+</div>
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+<br><br>
+
+#### Sharpen
+<div align="center">
+<img height="200" src="images/logo.png" title=""/>
+<img height="200" src="images/README/exo24s.png" title=""/>
+<br>
+<i>Image originale et version modifiée</i>
+</div>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+<br><br><br>
+
+---
+
+### <a id="p25"></a> 25. FILTRES SÉPARABLES
+<div align="center">
+<img height="500" src="images/README/exo25b.png" title=""/><br>
+<img height="500" src="images/README/exo25b.png" title=""/>
+<br>
+<i>Image originale et version modifiée</i>
+</div>
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.  
+Sed posuere consectetur est at lobortis.  
+Aenean lacinia bibendum nulla sed consectetur.
+
+<br><br><br>
+
+---
+
+### <a id="p26"></a> 26. DÉTECTION DE CONTOURS
+<div align="center">
+<img height="200" src="images/photo.jpg" title=""/>
+<img height="200" src="images/README/exo26.png" title=""/>
+<br>
+<i>Image originale et version modifiée</i>
+</div>
+
+J'ai fais une détection des contours mais malheureusement, ça ne correspond pas à l'image de l'énnoncé
+
+<br><br><br>
