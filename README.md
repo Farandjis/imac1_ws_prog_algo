@@ -432,6 +432,8 @@ Sed nisi. Nulla quis sem at nibh elementum imperdiet.
 
 ### <a id="p24"></a> 24. CONVOLUTION
 
+L'objectif est de créé un algorithme qui prend en entrée une matrice qui, en fonction de ses valeurs,
+provoque des effets particuliers sur l'image.
 
 <br><br>
 
@@ -443,9 +445,7 @@ Sed nisi. Nulla quis sem at nibh elementum imperdiet.
 <i>Image originale et version modifiée</i>
 </div>
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit.  
-Duis sagittis ipsum. Praesent mauris.  
-Fusce nec tellus sed augue semper porta.
+On rend flou l'image (ici, un flou léger, la matrice fait du 10x10, donc le pixel est la moyenne des 99 pixels autour de lui).
 
 <br><br>
 
@@ -456,8 +456,8 @@ Fusce nec tellus sed augue semper porta.
 <br>
 <i>Image originale et version modifiée</i>
 </div>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-
+Un sorte de mini effet 3D si on pourrait dire (on dirait que le logo ressort, comme s'il y avait de l'ombre, comme
+si le logo était sur une bosse). Utilisation de https://en.wikipedia.org/wiki/Image_embossing pour récupérer la matrice. 
 <br><br>
 
 #### Outline
@@ -468,7 +468,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 <i>Image originale et version modifiée</i>
 </div>
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+On souhaite conserver uniquement les contours, utilisation de https://docs.gimp.org/2.6/fr/plug-in-convmatrix.html
 
 <br><br>
 
@@ -479,7 +479,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 <br>
 <i>Image originale et version modifiée</i>
 </div>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+On souhaite améliorer la netteté de l'image, utilisation de https://fr.wikipedia.org/wiki/Noyau_(traitement_d%27image 
 
 <br><br><br>
 
@@ -487,16 +487,20 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 
 ### <a id="p25"></a> 25. FILTRES SÉPARABLES
 <div align="center">
-<img height="500" src="images/README/exo25b.png" title=""/><br>
+<img height="500" src="images/README/exo25a.png" title=""/><br>
 <img height="500" src="images/README/exo25b.png" title=""/>
 <br>
 <i>Image originale et version modifiée</i>
 </div>
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit.  
-Sed posuere consectetur est at lobortis.  
-Aenean lacinia bibendum nulla sed consectetur.
-
+Plutôt que de parcourir la matrice entièrement pour chaque pixel de l'image,
+on analyse dans un premier temps l'image à l'horizontal puis à la verticale.
+On fait le mélange uniquement sur les pixels horizontaux quand on parcours à l'horizontal
+(et donc verticaux quand on parcourt à la vertical).\
+On remarque que la première méthode prend beaucoup plus de temps que la méthode 2.\
+\
+Remarque : le temps varie en fonction de l'intensité du flou et de la configuration matérielle, je n'estime pas
+nécessaire d'indiquer l'intensité choisit (mais elle était élevé, 300 peut être ?).
 <br><br><br>
 
 ---
