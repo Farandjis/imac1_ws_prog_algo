@@ -373,10 +373,10 @@ Voici les étapes à suivre :
 5. Conversion Linear RGB -> sRGB
 
 <div align="center">
-<img height="200" src="images/README/exo20_pre1.png" title=""/>
+<img height="200" src="images/README/exo20_ pre1.png" title=""/>
 <br>
 <i>Rendu après l'étape 2</i><br>
-<img height="200" src="images/README/exo20_pre2.png" title=""/>
+<img height="200" src="images/README/exo20 pre2.png" title=""/>
 <br>
 <i>Rendu après l'étape 3</i>
 </div>
@@ -436,7 +436,7 @@ provoque des effets particuliers sur l'image.
 #### Box Blur
 <div align="center">
 <img height="200" src="images/logo.png" title=""/>
-<img height="200" src="images/README/exo24_10x10.png" title=""/>
+<img height="200" src="images/README/exo24 10x10.png" title=""/>
 <br>
 <i>Image originale et version modifiée</i>
 </div>
